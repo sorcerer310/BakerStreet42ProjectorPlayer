@@ -13,7 +13,7 @@ import android.os.Vibrator;
 import android.view.WindowManager;
 
 /**
- * 设备工具类，全部都是操作硬件设备功能的一些类
+ * 设备工具类，操作一些硬件设备功能
  * Created by fengchong on 16/1/18.
  */
 public class DeviceUtils {
@@ -42,6 +42,16 @@ public class DeviceUtils {
         intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,componentName);
         intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"激活一键锁屏");
         activity.startActivityForResult(intent, MY_REQUEST_CODE);
+    }
+
+    /**
+     * 判断是否处于锁屏状态
+     * @param c
+     * @return	返回ture为锁屏,返回flase为未锁屏
+     */
+    public final static boolean isScreenLocked(Context c) {
+        KeyguardManager km = (KeyguardManager) c.getSystemService(c.KEYGUARD_SERVICE);
+        return km.inKeyguardRestrictedInputMode();
     }
 
     /**

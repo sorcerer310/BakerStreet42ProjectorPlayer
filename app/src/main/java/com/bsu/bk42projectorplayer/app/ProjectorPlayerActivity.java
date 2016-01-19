@@ -44,10 +44,9 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
         String urivalue = intent.getStringExtra(Constants.NOTIFICATION_URI);
         if(urivalue==null || urivalue.equals(""))
             return;
-
         DeviceUtils.vibrate(this, 500);
-
-        DeviceUtils.wakeScreen(ProjectorPlayerActivity.this);
+        if(DeviceUtils.isScreenLocked(this))
+            DeviceUtils.wakeScreen(this);
     }
 
     @Override

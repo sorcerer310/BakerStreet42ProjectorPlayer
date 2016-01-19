@@ -77,45 +77,24 @@ public final class NotificationReceiver extends BroadcastReceiver {
             Log.d(LOGTAG, "notificationMessage=" + notificationMessage);
             Log.d(LOGTAG, "notificationUri=" + notificationUri);
 
-            //此处做了修改,判断当前是否锁屏,如果锁屏发消息,否则直接转到对应的Activity
-            if(NotificationReceiver.isScreenLocked(context)){
-                //收到消息后,如果屏幕锁屏,把消息传递给Notifier对象,让Notifier在通知栏通知用户
-//                Notifier notifier = new Notifier(context);
-//                notifier.notify(notificationId, notificationApiKey,
-//	                    notificationTitle, notificationMessage, notificationUri,notificationFrom,packetId);
+//            Notifier notifier = new Notifier(context);
+//            notifier.notify(notificationId, notificationApiKey,
+//                    notificationTitle, notificationMessage, notificationUri,notificationFrom,packetId);
+
+            //直接转到对应的Activity
+            Intent nintent = new Intent(context,ProjectorPlayerActivity.class);
+            nintent.putExtra(Constants.NOTIFICATION_ID,notificationId);
+            nintent.putExtra(Constants.NOTIFICATION_API_KEY,notificationApiKey);
+            nintent.putExtra(Constants.NOTIFICATION_TITLE,notificationTitle);
+            nintent.putExtra(Constants.NOTIFICATION_MESSAGE,notificationMessage);
+            nintent.putExtra(Constants.NOTIFICATION_URI,notificationUri);
+            nintent.putExtra(Constants.NOTIFICATION_FROM, notificationFrom);
+            nintent.putExtra(Constants.PACKET_ID, packetId);
+            nintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            context.startActivity(nintent);
 
 
-                Intent nintent = new Intent(context,ProjectorPlayerActivity.class);
-                nintent.putExtra(Constants.NOTIFICATION_ID,notificationId);
-                nintent.putExtra(Constants.NOTIFICATION_API_KEY,notificationApiKey);
-                nintent.putExtra(Constants.NOTIFICATION_TITLE,notificationTitle);
-                nintent.putExtra(Constants.NOTIFICATION_MESSAGE,notificationMessage);
-                nintent.putExtra(Constants.NOTIFICATION_URI,notificationUri);
-                nintent.putExtra(Constants.NOTIFICATION_FROM, notificationFrom);
-                nintent.putExtra(Constants.PACKET_ID, packetId);
-                nintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
-//                nintent.setAction("org.androidpn.client.NotificationService");//你定义的service的action
-//                nintent.setPackage("com.bsu.bk42projectorplayer.app");//这里你需要设置你应用的包名
-                context.startActivity(nintent);
-
-
-            }else{
-                //如果未锁屏,直接把对应消息传给主类
-                Intent nintent = new Intent(context,ProjectorPlayerActivity.class);
-                nintent.putExtra(Constants.NOTIFICATION_ID,notificationId);
-                nintent.putExtra(Constants.NOTIFICATION_API_KEY,notificationApiKey);
-                nintent.putExtra(Constants.NOTIFICATION_TITLE,notificationTitle);
-                nintent.putExtra(Constants.NOTIFICATION_MESSAGE,notificationMessage);
-                nintent.putExtra(Constants.NOTIFICATION_URI,notificationUri);
-                nintent.putExtra(Constants.NOTIFICATION_FROM, notificationFrom);
-                nintent.putExtra(Constants.PACKET_ID, packetId);
-                nintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                context.startActivity(nintent);
-            }
-            
 //            //先获得视频数据
 //            Map<String,String> m = Utils.parseVideoData(notificationUri);
 //            //判断该视频如果已存在,就不发送,如果不存在则发送视频到手机
@@ -143,25 +122,25 @@ public final class NotificationReceiver extends BroadcastReceiver {
 //            }
         }
     } 
-    /**
-     * 判断是否处于锁屏状态
-     * @param c
-     * @return	返回ture为锁屏,返回flase为未锁屏
-     */
-    public final static boolean isScreenLocked(Context c) {
-    	android.app.KeyguardManager mKeyguardManager = (KeyguardManager) c.getSystemService(c.KEYGUARD_SERVICE);
-    	return mKeyguardManager.inKeyguardRestrictedInputMode();  
-
-    }
-    public final static boolean isAppForground(Context mContext) {
-        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
-        if (!tasks.isEmpty()) {
-            ComponentName topActivity = tasks.get(0).topActivity;
-            if (!topActivity.getPackageName().equals(mContext.getPackageName())) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    /**
+//     * 判断是否处于锁屏状态
+//     * @param c
+//     * @return	返回ture为锁屏,返回flase为未锁屏
+//     */
+//    public final static boolean isScreenLocked(Context c) {
+//    	android.app.KeyguardManager mKeyguardManager = (KeyguardManager) c.getSystemService(c.KEYGUARD_SERVICE);
+//    	return mKeyguardManager.inKeyguardRestrictedInputMode();
+//
+//    }
+//    public final static boolean isAppForground(Context mContext) {
+//        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+//        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+//        if (!tasks.isEmpty()) {
+//            ComponentName topActivity = tasks.get(0).topActivity;
+//            if (!topActivity.getPackageName().equals(mContext.getPackageName())) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 }
