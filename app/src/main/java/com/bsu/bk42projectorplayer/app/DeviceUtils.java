@@ -104,10 +104,6 @@ public class DeviceUtils {
      * 唤醒屏幕
      */
     public static void wakeScreen(Activity activity){
-        //屏幕解锁
-        km= (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
-        KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
-        kl.disableKeyguard();
 
         //屏幕唤醒
         if(wakeLock==null) {
@@ -116,6 +112,11 @@ public class DeviceUtils {
         }
         wakeLock.acquire();
         wakeLock.release();
+
+        //屏幕解锁
+        km= (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
+        kl.disableKeyguard();
     }
     //唤醒屏幕部分----------------------
 
