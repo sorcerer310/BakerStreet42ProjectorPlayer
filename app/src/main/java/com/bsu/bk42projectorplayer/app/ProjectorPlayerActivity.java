@@ -1,15 +1,9 @@
 package com.bsu.bk42projectorplayer.app;
 
-import android.app.Activity;
-import android.app.KeyguardManager;
-import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.PowerManager;
-import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,7 +17,6 @@ import android.widget.VideoView;
 import org.androidpn.client.Constants;
 import org.androidpn.client.ServiceManager;
 
-import java.util.Properties;
 
 
 public class ProjectorPlayerActivity extends ActionBarActivity {
@@ -114,16 +107,34 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
         vv = (VideoView) findViewById(R.id.vv);
         mc = new MediaController(this);
 //        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(900,720);      //华为分辨率
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1920,1080);      //坚果分辨率
+//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1920,1080);      //坚果分辨率
+//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1280,720);      //投影仪分辨率分辨率
+//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(2048,1536);      //Android pad分辨率分辨率
+
+        RelativeLayout.LayoutParams lp=
+                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+
+//        lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+//        lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+//        lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+//        lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
         vv.setLayoutParams(lp);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         vv.setMediaController(mc);
-
         vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             @Override
             public void onCompletion(MediaPlayer arg0) {
                 DeviceUtils.lockScreen(ProjectorPlayerActivity.this);
             }});
+
+
+//        调试代码
+        vv.setVideoURI(Uri.parse("android.resource://com.bsu.bk42projectorplayer.app/"+R.raw.pyramid));
+        vv.start();
+
+//        playVideo("pyramid");
+//        调试代码
     }
 
     /**
@@ -151,14 +162,27 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
      * @return      返回系统中资源ID
      */
     private int vpath2VideoResource(String vname){
-        if(vname.equals("v001")){
-            return R.raw.v001;
-        }else if(vname.equals("v002")){
-            return R.raw.v002;
-        }else if(vname.equals("v003")){
-            return R.raw.v003;
-        }else if(vname.equals("v004")){
-            return R.raw.v004;
+        //结局视频
+//        if(vname.equals("end1")){
+//            return R.raw.end1;
+//        }else if(vname.equals("end2")){
+//            return R.raw.end2;
+//        }else{
+//            return -1;
+//        }
+
+        //玄武宫视频
+//        if(vname.equals("xuanwu1")){
+//            return R.raw.xuanwu1;
+//        }else if(vname.equals("xuanwu2")){
+//            return R.raw.xuanwu2;
+//        }else{
+//            return -1;
+//        }
+
+        //金字塔视频
+        if(vname.equals("pyramid")){
+            return R.raw.pyramid;
         }else{
             return -1;
         }
