@@ -2,7 +2,7 @@
 
 buildscript {
     repositories {
-        maven { url "http://42.121.78.119:8081/nexus/content/groups/public/"}
+        maven { url "http://42.121.78.119:8081/nexus/content/groups/public/" }
         mavenCentral()
 //        jcenter()
     }
@@ -16,7 +16,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url "http://42.121.78.119:8081/nexus/content/groups/public/"}
+        maven { url "http://42.121.78.119:8081/nexus/content/groups/public/" }
         mavenCentral()
 //        jcenter()
     }

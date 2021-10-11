@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2009 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,7 +29,7 @@ import org.jivesoftware.smack.proxy.ProxyInfo;
 /**
  * Configuration to use while establishing the connection to the XMPP server via
  * HTTP binding.
- * 
+ *
  * @see BOSHConnection
  * @author Guenther Niess
  */
@@ -54,7 +54,7 @@ public class BOSHConfiguration extends ConnectionConfiguration {
 
     /**
      * Create a HTTP Binding configuration.
-     * 
+     *
      * @param https true if you want to use SSL
      *             (e.g. false for http://domain.lt:7070/http-bind).
      * @param host the hostname or IP address of the connection manager
@@ -75,7 +75,7 @@ public class BOSHConfiguration extends ConnectionConfiguration {
 
     /**
      * Create a HTTP Binding configuration.
-     * 
+     *
      * @param https true if you want to use SSL
      *             (e.g. false for http://domain.lt:7070/http-bind).
      * @param host the hostname or IP address of the connection manager

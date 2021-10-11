@@ -29,7 +29,7 @@ import com.bsu.bk42projectorplayer.app.ProjectorPlayerActivity;
 
 import java.util.Random;
 
-/** 
+/**
  * This class is to notify the user of messages with NotificationManager.
  *
  * @author Sehwan Noh (devnoh@gmail.com)
@@ -55,7 +55,7 @@ public class Notifier {
     }
 
     public void notify(String notificationId, String apiKey, String title,
-            String message, String uri,String from,String packetId) {
+                       String message, String uri, String from, String packetId) {
         Log.d(LOGTAG, "notify()...");
 
         Log.d(LOGTAG, "notificationId=" + notificationId);
@@ -86,7 +86,7 @@ public class Notifier {
 
 //            Intent intent = new Intent(context,NotificationDetailsActivity.class);
             //通知栏的消息点击后,直接转到要显示的主activity
-            Intent intent = new Intent(context,ProjectorPlayerActivity.class);
+            Intent intent = new Intent(context, ProjectorPlayerActivity.class);
 
             intent.putExtra(Constants.NOTIFICATION_ID, notificationId);
             intent.putExtra(Constants.NOTIFICATION_API_KEY, apiKey);
@@ -95,7 +95,7 @@ public class Notifier {
             intent.putExtra(Constants.NOTIFICATION_URI, uri);
             intent.putExtra(Constants.NOTIFICATION_FROM, from);
             intent.putExtra(Constants.PACKET_ID, packetId);
-            
+
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -105,7 +105,7 @@ public class Notifier {
             PendingIntent contentIntent = PendingIntent.getActivity(context, random.nextInt(),
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            notification.setLatestEventInfo(context, title, message,contentIntent);
+            notification.setLatestEventInfo(context, title, message, contentIntent);
             notificationManager.notify(random.nextInt(), notification);
 
             //-----------------------分割线-------------------

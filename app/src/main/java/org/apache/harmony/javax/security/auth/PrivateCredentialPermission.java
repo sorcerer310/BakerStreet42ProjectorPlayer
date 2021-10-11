@@ -26,7 +26,6 @@ import java.security.Principal;
 import java.util.Set;
 
 
-
 /**
  * Protects private credential objects belonging to a {@code Subject}. It has
  * only one action which is "read". The target name of this permission has a
@@ -35,7 +34,7 @@ import java.util.Set;
  * <pre>
  * targetName = CredentialClass {PrincipalClass &quot;PrincipalName&quot;}*
  * </pre>
- *
+ * <p>
  * First it states a credential class and is followed then by a list of one or
  * more principals identifying the subject.
  * <p>
@@ -63,16 +62,14 @@ public final class PrivateCredentialPermission extends Permission {
 
     // owners set
     private transient CredOwner[] set;
-    
+
     /**
      * Creates a new permission for private credentials specified by the target
      * name {@code name} and an {@code action}. The action is always
      * {@code "read"}.
      *
-     * @param name
-     *            the target name of the permission.
-     * @param action
-     *            the action {@code "read"}.
+     * @param name   the target name of the permission.
+     * @param action the action {@code "read"}.
      */
     public PrivateCredentialPermission(String name, String action) {
         super(name);
@@ -86,11 +83,9 @@ public final class PrivateCredentialPermission extends Permission {
     /**
      * Creates a {@code PrivateCredentialPermission} from the {@code Credential}
      * class and set of principals.
-     * 
-     * @param credentialClass
-     *            the credential class name.
-     * @param principals
-     *            the set of principals.
+     *
+     * @param credentialClass the credential class name.
+     * @param principals      the set of principals.
      */
     PrivateCredentialPermission(String credentialClass, Set<Principal> principals) {
         super(credentialClass);
@@ -204,7 +199,7 @@ public final class PrivateCredentialPermission extends Permission {
      * </pre>
      *
      * @return the principal classes and names associated with this {@code
-     *         PrivateCredentialPermission}.
+     * PrivateCredentialPermission}.
      */
     public String[][] getPrincipals() {
 
@@ -381,7 +376,7 @@ public final class PrivateCredentialPermission extends Permission {
             if (obj instanceof CredOwner) {
                 CredOwner that = (CredOwner) obj;
                 return principalClass.equals(that.principalClass)
-                    && principalName.equals(that.principalName);
+                        && principalName.equals(that.principalName);
             }
             return false;
         }

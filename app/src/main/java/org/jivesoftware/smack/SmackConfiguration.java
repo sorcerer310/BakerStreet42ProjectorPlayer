@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,7 +39,7 @@ import java.util.*;
  *
  * Configuration settings are stored in META-INF/smack-config.xml (typically inside the
  * smack.jar file).
- * 
+ *
  * @author Gaston Dombiak
  */
 public final class SmackConfiguration {
@@ -55,7 +55,7 @@ public final class SmackConfiguration {
 
     /**
      * Loads the configuration from the smack-config.xml file.<p>
-     * 
+     *
      * So far this means that:
      * 1) a set of classes will be loaded in order to execute their static init block
      * 2) retrieve and set the current Smack release
@@ -80,44 +80,37 @@ public final class SmackConfiguration {
                                 if (parser.getName().equals("className")) {
                                     // Attempt to load the class so that the class can get initialized
                                     parseClassToLoad(parser);
-                                }
-                                else if (parser.getName().equals("packetReplyTimeout")) {
+                                } else if (parser.getName().equals("packetReplyTimeout")) {
                                     packetReplyTimeout =
                                             parseIntProperty(parser, packetReplyTimeout);
-                                }
-                                else if (parser.getName().equals("keepAliveInterval")) {
+                                } else if (parser.getName().equals("keepAliveInterval")) {
                                     keepAliveInterval = parseIntProperty(parser, keepAliveInterval);
-                                }
-                                else if (parser.getName().equals("mechName")) {
+                                } else if (parser.getName().equals("mechName")) {
                                     defaultMechs.add(parser.nextText());
                                 }
                             }
                             eventType = parser.next();
                         }
                         while (eventType != XmlPullParser.END_DOCUMENT);
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
-                    }
-                    finally {
+                    } finally {
                         try {
                             systemStream.close();
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             // Ignore.
                         }
                     }
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Returns the Smack version information, eg "1.3.0".
-     * 
+     *
      * @return the Smack version information.
      */
     public static String getVersion() {
@@ -127,7 +120,7 @@ public final class SmackConfiguration {
     /**
      * Returns the number of milliseconds to wait for a response from
      * the server. The default value is 5000 ms.
-     * 
+     *
      * @return the milliseconds to wait for a response from the server
      */
     public static int getPacketReplyTimeout() {
@@ -141,7 +134,7 @@ public final class SmackConfiguration {
     /**
      * Sets the number of milliseconds to wait for a response from
      * the server.
-     * 
+     *
      * @param timeout the milliseconds to wait for a response from the server
      */
     public static void setPacketReplyTimeout(int timeout) {
@@ -181,18 +174,18 @@ public final class SmackConfiguration {
      * @param mech the SASL mechanism to be added
      */
     public static void addSaslMech(String mech) {
-        if(! defaultMechs.contains(mech) ) {
+        if (!defaultMechs.contains(mech)) {
             defaultMechs.add(mech);
         }
     }
 
-   /**
+    /**
      * Add a Collection of SASL mechanisms to the list to be used.
      *
      * @param mechs the Collection of SASL mechanisms to be added
      */
     public static void addSaslMechs(Collection<String> mechs) {
-        for(String mech : mechs) {
+        for (String mech : mechs) {
             addSaslMech(mech);
         }
     }
@@ -203,18 +196,18 @@ public final class SmackConfiguration {
      * @param mech the SASL mechanism to be removed
      */
     public static void removeSaslMech(String mech) {
-        if( defaultMechs.contains(mech) ) {
+        if (defaultMechs.contains(mech)) {
             defaultMechs.remove(mech);
         }
     }
 
-   /**
+    /**
      * Remove a Collection of SASL mechanisms to the list to be used.
      *
      * @param mechs the Collection of SASL mechanisms to be removed
      */
     public static void removeSaslMechs(Collection<String> mechs) {
-        for(String mech : mechs) {
+        for (String mech : mechs) {
             removeSaslMech(mech);
         }
     }
@@ -235,20 +228,17 @@ public final class SmackConfiguration {
         // Attempt to load the class so that the class can get initialized
         try {
             Class.forName(className);
-        }
-        catch (ClassNotFoundException cnfe) {
+        } catch (ClassNotFoundException cnfe) {
             System.err.println("Error! A startup class specified in smack-config.xml could " +
                     "not be loaded: " + className);
         }
     }
 
     private static int parseIntProperty(XmlPullParser parser, int defaultValue)
-            throws Exception
-    {
+            throws Exception {
         try {
             return Integer.parseInt(parser.nextText());
-        }
-        catch (NumberFormatException nfe) {
+        } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
             return defaultValue;
         }

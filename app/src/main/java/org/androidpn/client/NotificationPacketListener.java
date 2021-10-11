@@ -21,8 +21,8 @@ import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Packet;
 
-/** 
- * This class notifies the receiver of incoming notifcation packets asynchronously.  
+/**
+ * This class notifies the receiver of incoming notifcation packets asynchronously.
  *
  * @author Sehwan Noh (devnoh@gmail.com)
  */
@@ -68,15 +68,16 @@ public class NotificationPacketListener implements PacketListener {
                 intent.putExtra(Constants.NOTIFICATION_URI, notificationUri);
                 intent.putExtra(Constants.NOTIFICATION_FROM, notificationFrom);
                 intent.putExtra(Constants.PACKET_ID, packetId);
-                
+
                 //TODO FIXME 发送收到通知回执
                 IQ result = NotificationIQ.createResultIQ(notification);
-                
-                try{
-                	xmppManager.getConnection().sendPacket(result);
-                }catch(Exception e){}
-                
-                xmppManager.getContext().sendBroadcast(intent); 
+
+                try {
+                    xmppManager.getConnection().sendPacket(result);
+                } catch (Exception e) {
+                }
+
+                xmppManager.getContext().sendBroadcast(intent);
             }
         }
 

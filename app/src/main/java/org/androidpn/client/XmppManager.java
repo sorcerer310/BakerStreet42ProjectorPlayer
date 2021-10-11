@@ -38,7 +38,7 @@ import java.util.concurrent.Future;
 
 /**
  * This class is to manage the XMPP connection between client and server.
- * 
+ *
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public class XmppManager {
@@ -272,7 +272,7 @@ public class XmppManager {
     }
 
     /**
-     * A runnable task to connect the server. 
+     * A runnable task to connect the server.
      */
     private class ConnectTask implements Runnable {
 
@@ -321,7 +321,7 @@ public class XmppManager {
     }
 
     /**
-     * A runnable task to register a new user onto the server. 
+     * A runnable task to register a new user onto the server.
      */
     private class RegisterTask implements Runnable {
 
@@ -403,7 +403,7 @@ public class XmppManager {
     }
 
     /**
-     * A runnable task to log into the server. 
+     * A runnable task to log into the server.
      */
     private class LoginTask implements Runnable {
 
@@ -439,7 +439,7 @@ public class XmppManager {
                     PacketListener packetListener = xmppManager
                             .getNotificationPacketListener();
                     connection.addPacketListener(packetListener, packetFilter);
-                    
+
                     getConnection().startKeepAliveThread(xmppManager);
 
                 } catch (XMPPException e) {
@@ -450,7 +450,7 @@ public class XmppManager {
                     String errorMessage = e.getMessage();
                     if (errorMessage != null
                             && errorMessage
-                                    .contains(INVALID_CREDENTIALS_ERROR_CODE)) {
+                            .contains(INVALID_CREDENTIALS_ERROR_CODE)) {
                         xmppManager.reregisterAccount();
                         return;
                     }

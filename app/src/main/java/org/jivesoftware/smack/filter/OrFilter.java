@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,7 +38,7 @@ public class OrFilter implements PacketFilter {
     /**
      * The list of filters.
      */
-    private PacketFilter [] filters;
+    private PacketFilter[] filters;
 
     /**
      * Creates an empty OR filter. Filters should be added using the
@@ -77,8 +77,8 @@ public class OrFilter implements PacketFilter {
         }
         // If there is no more room left in the filters array, expand it.
         if (size == filters.length) {
-            PacketFilter [] newFilters = new PacketFilter[filters.length+2];
-            for (int i=0; i<filters.length; i++) {
+            PacketFilter[] newFilters = new PacketFilter[filters.length + 2];
+            for (int i = 0; i < filters.length; i++) {
                 newFilters[i] = filters[i];
             }
             filters = newFilters;
@@ -89,7 +89,7 @@ public class OrFilter implements PacketFilter {
     }
 
     public boolean accept(Packet packet) {
-        for (int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             if (filters[i].accept(packet)) {
                 return true;
             }

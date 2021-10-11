@@ -18,7 +18,7 @@ package org.androidpn.client;
 import android.util.Log;
 import org.jivesoftware.smack.ConnectionListener;
 
-/** 
+/**
  * A listener class for monitoring connection closing and reconnection events.
  *
  * @author Sehwan Noh (devnoh@gmail.com)

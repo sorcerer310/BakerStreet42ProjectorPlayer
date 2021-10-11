@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -151,32 +151,28 @@ public class Authentication extends IQ {
         if (username != null) {
             if (username.equals("")) {
                 buf.append("<username/>");
-            }
-            else {
+            } else {
                 buf.append("<username>").append(username).append("</username>");
             }
         }
         if (digest != null) {
             if (digest.equals("")) {
                 buf.append("<digest/>");
-            }
-            else {
+            } else {
                 buf.append("<digest>").append(digest).append("</digest>");
             }
         }
         if (password != null && digest == null) {
             if (password.equals("")) {
                 buf.append("<password/>");
-            }
-            else {
+            } else {
                 buf.append("<password>").append(StringUtils.escapeForXML(password)).append("</password>");
             }
         }
         if (resource != null) {
             if (resource.equals("")) {
                 buf.append("<resource/>");
-            }
-            else {
+            } else {
                 buf.append("<resource>").append(resource).append("</resource>");
             }
         }

@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision: $
  * $Date: $
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,6 +28,7 @@ import org.jivesoftware.smack.packet.Session;
 import org.jivesoftware.smack.sasl.*;
 
 import org.apache.harmony.javax.security.auth.callback.CallbackHandler;
+
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -96,10 +97,10 @@ public class SASLAuthentication implements UserAuthentication {
         registerSASLMechanism("ANONYMOUS", SASLAnonymous.class);
 
 //        supportSASLMechanism("GSSAPI",0);
-        supportSASLMechanism("DIGEST-MD5",0);
+        supportSASLMechanism("DIGEST-MD5", 0);
 //        supportSASLMechanism("CRAM-MD5",2);
-        supportSASLMechanism("PLAIN",1);
-        supportSASLMechanism("ANONYMOUS",2);
+        supportSASLMechanism("PLAIN", 1);
+        supportSASLMechanism("ANONYMOUS", 2);
 
     }
 
@@ -213,7 +214,7 @@ public class SASLAuthentication implements UserAuthentication {
      * @return the full JID provided by the server while binding a resource to the connection.
      * @throws XMPPException if an error occures while authenticating.
      */
-    public String authenticate(String username, String resource, CallbackHandler cbh) 
+    public String authenticate(String username, String resource, CallbackHandler cbh)
             throws XMPPException {
         // Locate the SASLMechanism to use
         String selectedMechanism = null;
@@ -242,8 +243,7 @@ public class SASLAuthentication implements UserAuthentication {
                     while (!saslNegotiated && !saslFailed && (System.currentTimeMillis() < endTime)) {
                         try {
                             wait(Math.abs(System.currentTimeMillis() - endTime));
-                        }
-                        catch (InterruptedException e) {
+                        } catch (InterruptedException e) {
                             // Ignore
                         }
                     }
@@ -255,8 +255,7 @@ public class SASLAuthentication implements UserAuthentication {
                     if (errorCondition != null) {
                         throw new XMPPException("SASL authentication " +
                                 selectedMechanism + " failed: " + errorCondition);
-                    }
-                    else {
+                    } else {
                         throw new XMPPException("SASL authentication failed using mechanism " +
                                 selectedMechanism);
                     }
@@ -268,15 +267,12 @@ public class SASLAuthentication implements UserAuthentication {
                 } else {
                     // SASL authentication failed
                 }
-            }
-            catch (XMPPException e) {
+            } catch (XMPPException e) {
                 throw e;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             throw new XMPPException("SASL Authentication failed. No known authentication mechanisims.");
         }
         throw new XMPPException("SASL authentication failed");
@@ -324,8 +320,7 @@ public class SASLAuthentication implements UserAuthentication {
                     if (!saslNegotiated && !saslFailed) {
                         try {
                             wait(30000);
-                        }
-                        catch (InterruptedException e) {
+                        } catch (InterruptedException e) {
                             // Ignore
                         }
                     }
@@ -337,8 +332,7 @@ public class SASLAuthentication implements UserAuthentication {
                     if (errorCondition != null) {
                         throw new XMPPException("SASL authentication " +
                                 selectedMechanism + " failed: " + errorCondition);
-                    }
-                    else {
+                    } else {
                         throw new XMPPException("SASL authentication failed using mechanism " +
                                 selectedMechanism);
                     }
@@ -347,24 +341,20 @@ public class SASLAuthentication implements UserAuthentication {
                 if (saslNegotiated) {
                     // Bind a resource for this connection and
                     return bindResourceAndEstablishSession(resource);
-                }
-                else {
+                } else {
                     // SASL authentication failed so try a Non-SASL authentication
                     return new NonSASLAuthentication(connection)
                             .authenticate(username, password, resource);
                 }
-            }
-            catch (XMPPException e) {
+            } catch (XMPPException e) {
                 throw e;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 // SASL authentication failed so try a Non-SASL authentication
                 return new NonSASLAuthentication(connection)
                         .authenticate(username, password, resource);
             }
-        }
-        else {
+        } else {
             // No SASL method was found so try a Non-SASL authentication
             return new NonSASLAuthentication(connection).authenticate(username, password, resource);
         }
@@ -384,15 +374,14 @@ public class SASLAuthentication implements UserAuthentication {
     public String authenticateAnonymously() throws XMPPException {
         try {
             currentMechanism = new SASLAnonymous(this);
-            currentMechanism.authenticate(null,null,"");
+            currentMechanism.authenticate(null, null, "");
 
             // Wait until SASL negotiation finishes
             synchronized (this) {
                 if (!saslNegotiated && !saslFailed) {
                     try {
                         wait(5000);
-                    }
-                    catch (InterruptedException e) {
+                    } catch (InterruptedException e) {
                         // Ignore
                     }
                 }
@@ -403,8 +392,7 @@ public class SASLAuthentication implements UserAuthentication {
                 // so throw an exception
                 if (errorCondition != null) {
                     throw new XMPPException("SASL authentication failed: " + errorCondition);
-                }
-                else {
+                } else {
                     throw new XMPPException("SASL authentication failed");
                 }
             }
@@ -412,8 +400,7 @@ public class SASLAuthentication implements UserAuthentication {
             if (saslNegotiated) {
                 // Bind a resource for this connection and
                 return bindResourceAndEstablishSession(null);
-            }
-            else {
+            } else {
                 return new NonSASLAuthentication(connection).authenticateAnonymously();
             }
         } catch (IOException e) {
@@ -428,8 +415,7 @@ public class SASLAuthentication implements UserAuthentication {
             while (!resourceBinded && (System.currentTimeMillis() < endTime)) {
                 try {
                     wait(Math.abs(System.currentTimeMillis() - endTime));
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                     // Ignore
                 }
             }
@@ -474,8 +460,7 @@ public class SASLAuthentication implements UserAuthentication {
             else if (ack.getType() == IQ.Type.ERROR) {
                 throw new XMPPException(ack.getError());
             }
-        }
-        else {
+        } else {
             // Server never offered session establishment
             throw new XMPPException("Session establishment not offered by server");
         }
@@ -531,7 +516,7 @@ public class SASLAuthentication implements UserAuthentication {
     /**
      * Notification message saying that SASL authentication has failed. The server may have
      * closed the connection depending on the number of possible retries.
-     * 
+     *
      * @deprecated replaced by {@see #authenticationFailed(String)}.
      */
     void authenticationFailed() {
@@ -541,7 +526,7 @@ public class SASLAuthentication implements UserAuthentication {
     /**
      * Notification message saying that SASL authentication has failed. The server may have
      * closed the connection depending on the number of possible retries.
-     * 
+     *
      * @param condition the error condition provided by the server.
      */
     void authenticationFailed(String condition) {
@@ -577,7 +562,7 @@ public class SASLAuthentication implements UserAuthentication {
     void sessionsSupported() {
         sessionSupported = true;
     }
-    
+
     /**
      * Initializes the internal state in order to be able to be reused. The authentication
      * is used by the connection at the first login and then reused after the connection

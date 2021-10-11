@@ -15,13 +15,13 @@
  */
 package org.androidpn.client;
 
-/** 
+/**
  * Utility class for LogCat.
  *
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public class LogUtil {
-    
+
     @SuppressWarnings("unchecked")
     public static String makeLogTag(Class cls) {
         return "Androidpn_" + cls.getSimpleName();

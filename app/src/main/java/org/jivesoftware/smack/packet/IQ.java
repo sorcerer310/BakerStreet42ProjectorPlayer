@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -60,8 +60,7 @@ public abstract class IQ extends Packet {
     public void setType(Type type) {
         if (type == null) {
             this.type = Type.GET;
-        }
-        else {
+        } else {
             this.type = type;
         }
     }
@@ -80,8 +79,7 @@ public abstract class IQ extends Packet {
         }
         if (type == null) {
             buf.append("type=\"get\">");
-        }
-        else {
+        } else {
             buf.append("type=\"").append(getType()).append("\">");
         }
         // Add the query section if there is one.
@@ -208,17 +206,13 @@ public abstract class IQ extends Packet {
             type = type.toLowerCase();
             if (GET.toString().equals(type)) {
                 return GET;
-            }
-            else if (SET.toString().equals(type)) {
+            } else if (SET.toString().equals(type)) {
                 return SET;
-            }
-            else if (ERROR.toString().equals(type)) {
+            } else if (ERROR.toString().equals(type)) {
                 return ERROR;
-            }
-            else if (RESULT.toString().equals(type)) {
+            } else if (RESULT.toString().equals(type)) {
                 return RESULT;
-            }
-            else {
+            } else {
                 return null;
             }
         }

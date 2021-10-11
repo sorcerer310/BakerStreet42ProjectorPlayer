@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -72,7 +72,7 @@ public class XMPPError {
      *     new XMPPError(XMPPError.Condition.remote_server_timeout);
      * If the Condition is not predefined, invocations should be like 
      *     new XMPPError(new XMPPError.Condition("my_own_error"));
-     * 
+     *
      * @param condition the error condition.
      */
     public XMPPError(Condition condition) {
@@ -124,7 +124,7 @@ public class XMPPError {
      * This constructor is used when the condition is not recognized automatically by XMPPError
      * i.e. there is not a defined instance of ErrorCondition or it does not applies the default 
      * specification.
-     * 
+     *
      * @param code the error code.
      * @param type the error type.
      * @param condition the error condition.
@@ -132,7 +132,7 @@ public class XMPPError {
      * @param extension list of packet extensions
      */
     public XMPPError(int code, Type type, String condition, String message,
-            List<PacketExtension> extension) {
+                     List<PacketExtension> extension) {
         this.code = code;
         this.type = type;
         this.condition = condition;
@@ -142,7 +142,7 @@ public class XMPPError {
 
     /**
      * Initialize the error infering the type and code for the received condition.
-     * 
+     *
      * @param condition the error condition.
      */
     private void init(Condition condition) {
@@ -156,6 +156,7 @@ public class XMPPError {
             this.code = defaultErrorSpecification.getCode();
         }
     }
+
     /**
      * Returns the error condition.
      *

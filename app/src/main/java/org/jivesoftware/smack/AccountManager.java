@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -96,8 +96,7 @@ public class AccountManager {
                 accountCreationSupported = info.getType() != IQ.Type.ERROR;
             }
             return accountCreationSupported;
-        }
-        catch (XMPPException xe) {
+        } catch (XMPPException xe) {
             return false;
         }
     }
@@ -132,12 +131,11 @@ public class AccountManager {
                 getRegistrationInfo();
             }
             List<String> attributes = info.getRequiredFields();
-            if (attributes.size()>0) {
-            	HashSet<String> set = new HashSet<String>(attributes);
+            if (attributes.size() > 0) {
+                HashSet<String> set = new HashSet<String>(attributes);
                 return Collections.unmodifiableSet(set);
             }
-        }
-        catch (XMPPException xe) {
+        } catch (XMPPException xe) {
             xe.printStackTrace();
         }
         return Collections.emptySet();
@@ -157,8 +155,7 @@ public class AccountManager {
                 getRegistrationInfo();
             }
             return info.getAttributes().get(name);
-        }
-        catch (XMPPException xe) {
+        } catch (XMPPException xe) {
             xe.printStackTrace();
         }
         return null;
@@ -177,8 +174,7 @@ public class AccountManager {
                 getRegistrationInfo();
             }
             return info.getInstructions();
-        }
-        catch (XMPPException xe) {
+        } catch (XMPPException xe) {
             return null;
         }
     }
@@ -219,8 +215,7 @@ public class AccountManager {
      * @see #getAccountAttributes()
      */
     public void createAccount(String username, String password, Map<String, String> attributes)
-            throws XMPPException
-    {
+            throws XMPPException {
         if (!supportsAccountCreation()) {
             throw new XMPPException("Server does not support account creation.");
         }
@@ -229,20 +224,19 @@ public class AccountManager {
         reg.setTo(connection.getServiceName());
         reg.setUsername(username);
         reg.setPassword(password);
-        for(String s : attributes.keySet()){
-        	reg.addAttribute(s, attributes.get(s));
+        for (String s : attributes.keySet()) {
+            reg.addAttribute(s, attributes.get(s));
         }
         PacketFilter filter = new AndFilter(new PacketIDFilter(reg.getPacketID()),
                 new PacketTypeFilter(IQ.class));
         PacketCollector collector = connection.createPacketCollector(filter);
         connection.sendPacket(reg);
-        IQ result = (IQ)collector.nextResult(SmackConfiguration.getPacketReplyTimeout());
+        IQ result = (IQ) collector.nextResult(SmackConfiguration.getPacketReplyTimeout());
         // Stop queuing results
         collector.cancel();
         if (result == null) {
             throw new XMPPException("No response from server.");
-        }
-        else if (result.getType() == IQ.Type.ERROR) {
+        } else if (result.getType() == IQ.Type.ERROR) {
             throw new XMPPException(result.getError());
         }
     }
@@ -265,13 +259,12 @@ public class AccountManager {
                 new PacketTypeFilter(IQ.class));
         PacketCollector collector = connection.createPacketCollector(filter);
         connection.sendPacket(reg);
-        IQ result = (IQ)collector.nextResult(SmackConfiguration.getPacketReplyTimeout());
+        IQ result = (IQ) collector.nextResult(SmackConfiguration.getPacketReplyTimeout());
         // Stop queuing results
         collector.cancel();
         if (result == null) {
             throw new XMPPException("No response from server.");
-        }
-        else if (result.getType() == IQ.Type.ERROR) {
+        } else if (result.getType() == IQ.Type.ERROR) {
             throw new XMPPException(result.getError());
         }
     }
@@ -297,13 +290,12 @@ public class AccountManager {
                 new PacketTypeFilter(IQ.class));
         PacketCollector collector = connection.createPacketCollector(filter);
         connection.sendPacket(reg);
-        IQ result = (IQ)collector.nextResult(SmackConfiguration.getPacketReplyTimeout());
+        IQ result = (IQ) collector.nextResult(SmackConfiguration.getPacketReplyTimeout());
         // Stop queuing results
         collector.cancel();
         if (result == null) {
             throw new XMPPException("No response from server.");
-        }
-        else if (result.getType() == IQ.Type.ERROR) {
+        } else if (result.getType() == IQ.Type.ERROR) {
             throw new XMPPException(result.getError());
         }
     }
@@ -320,17 +312,15 @@ public class AccountManager {
                 new PacketTypeFilter(IQ.class));
         PacketCollector collector = connection.createPacketCollector(filter);
         connection.sendPacket(reg);
-        IQ result = (IQ)collector.nextResult(SmackConfiguration.getPacketReplyTimeout());
+        IQ result = (IQ) collector.nextResult(SmackConfiguration.getPacketReplyTimeout());
         // Stop queuing results
         collector.cancel();
         if (result == null) {
             throw new XMPPException("No response from server.");
-        }
-        else if (result.getType() == IQ.Type.ERROR) {
+        } else if (result.getType() == IQ.Type.ERROR) {
             throw new XMPPException(result.getError());
-        }
-        else {
-            info = (Registration)result;
+        } else {
+            info = (Registration) result;
         }
     }
 }

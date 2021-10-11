@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -51,7 +51,7 @@ import java.util.Map;
 public class Registration extends IQ {
 
     private String instructions = null;
-    private Map<String, String> attributes = new HashMap<String,String>();
+    private Map<String, String> attributes = new HashMap<String, String>();
     private List<String> requiredFields = new ArrayList<String>();
     private boolean registered = false;
     private boolean remove = false;
@@ -84,45 +84,45 @@ public class Registration extends IQ {
     public Map<String, String> getAttributes() {
         return attributes;
     }
-    
-    public void addRequiredField(String field){
-    	requiredFields.add(field);
+
+    public void addRequiredField(String field) {
+        requiredFields.add(field);
     }
-    
-    public List<String> getRequiredFields(){
-    	return requiredFields;
+
+    public List<String> getRequiredFields() {
+        return requiredFields;
     }
-    
-    public void addAttribute(String key, String value){
-    	attributes.put(key, value);
+
+    public void addAttribute(String key, String value) {
+        attributes.put(key, value);
     }
-    
-    public void setRegistered(boolean registered){
-    	this.registered = registered;
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
-    
-    public boolean isRegistered(){
-    	return this.registered;
+
+    public boolean isRegistered() {
+        return this.registered;
     }
-    
-    public String getField(String key){
-    	return attributes.get(key);
+
+    public String getField(String key) {
+        return attributes.get(key);
     }
-    
-    public List<String> getFieldNames(){
-    	return new ArrayList<String>(attributes.keySet());
+
+    public List<String> getFieldNames() {
+        return new ArrayList<String>(attributes.keySet());
     }
-    
-    public void setUsername(String username){
-    	attributes.put("username", username);
+
+    public void setUsername(String username) {
+        attributes.put("username", username);
     }
-    
-    public void setPassword(String password){
-    	attributes.put("password", password);
+
+    public void setPassword(String password) {
+        attributes.put("password", password);
     }
-    
-    public void setRemove(boolean remove){
-    	this.remove = remove;
+
+    public void setRemove(boolean remove) {
+        this.remove = remove;
     }
 
     public String getChildElementXML() {
@@ -138,9 +138,8 @@ public class Registration extends IQ {
                 buf.append(value);
                 buf.append("</").append(name).append(">");
             }
-        }
-        else if(remove){
-        	buf.append("</remove>");
+        } else if (remove) {
+            buf.append("</remove>");
         }
         // Add packet extensions, if any are defined.
         buf.append(getExtensionsXML());

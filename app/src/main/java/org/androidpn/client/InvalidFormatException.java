@@ -15,7 +15,7 @@
  */
 package org.androidpn.client;
 
-/** 
+/**
  * Runtime exceptions produced by wrong meta-data settings.
  *
  * @author Sehwan Noh (devnoh@gmail.com)

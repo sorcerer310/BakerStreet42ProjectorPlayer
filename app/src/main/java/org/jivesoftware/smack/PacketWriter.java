@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -66,10 +66,10 @@ class PacketWriter {
         init();
     }
 
-    /** 
-    * Initializes the writer in order to be used. It is called at the first connection and also 
-    * is invoked if the connection is disconnected by an error.
-    */ 
+    /**
+     * Initializes the writer in order to be used. It is called at the first connection and also
+     * is invoked if the connection is disconnected by an error.
+     */
     protected void init() {
         this.writer = connection.writer;
         done = false;
@@ -96,8 +96,7 @@ class PacketWriter {
 
             try {
                 queue.put(packet);
-            }
-            catch (InterruptedException ie) {
+            } catch (InterruptedException ie) {
                 ie.printStackTrace();
                 return;
             }
@@ -124,9 +123,9 @@ class PacketWriter {
      * Starts the keep alive process. A white space (aka heartbeat) is going to be
      * sent to the server every 30 seconds (by default) since the last stanza was sent
      * to the server.
-     * @param username 
-     * @param xmppManager 
-     * @throws Exception 
+     * @param username
+     * @param xmppManager
+     * @throws Exception
      */
     void startKeepAliveProcess(XmppManager xmppManager) throws Exception {
         // Schedule a keep-alive task to run if the feature is enabled. will write
@@ -178,8 +177,7 @@ class PacketWriter {
                 synchronized (queue) {
                     queue.wait();
                 }
-            }
-            catch (InterruptedException ie) {
+            } catch (InterruptedException ie) {
                 // Do nothing
             }
         }
@@ -207,14 +205,13 @@ class PacketWriter {
             // by the shutdown process.
             try {
                 synchronized (writer) {
-                   while (!queue.isEmpty()) {
-                       Packet packet = queue.remove();
+                    while (!queue.isEmpty()) {
+                        Packet packet = queue.remove();
                         writer.write(packet.toXML());
                     }
                     writer.flush();
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -225,20 +222,16 @@ class PacketWriter {
             try {
                 writer.write("</stream:stream>");
                 writer.flush();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 // Do nothing
-            }
-            finally {
+            } finally {
                 try {
                     writer.close();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     // Do nothing
                 }
             }
-        }
-        catch (IOException ioe){
+        } catch (IOException ioe) {
             if (!done) {
                 done = true;
                 connection.packetReader.notifyConnectionError(ioe);
@@ -282,38 +275,35 @@ class PacketWriter {
         protected void setThread(Thread thread) {
             this.thread = thread;
         }
-        
+
         public void run() {
             try {
                 // Sleep 15 seconds before sending first heartbeat. This will give time to
                 // properly finish TLS negotiation and then start sending heartbeats.
                 Thread.sleep(15000);
-            }
-            catch (InterruptedException ie) {
+            } catch (InterruptedException ie) {
                 // Do nothing
             }
             while (!done && keepAliveThread == thread) {
-                    // Send heartbeat if no packet has been sent to the server for a given time
-                    if (System.currentTimeMillis() - lastActive >= delay) {
-                        try {
-                        	synchronized (writer) {
-                        		writer.write(" ");
-                        		writer.flush();
-                        	}
+                // Send heartbeat if no packet has been sent to the server for a given time
+                if (System.currentTimeMillis() - lastActive >= delay) {
+                    try {
+                        synchronized (writer) {
+                            writer.write(" ");
+                            writer.flush();
                         }
-                        catch (SocketException e) {
-                           Log.e("PacketReader", e.toString());
-                           connection.disconnect();
-                           xmppManager.startReconnectionThread();
-                        } catch (IOException e) {
-							e.printStackTrace();
-					}
+                    } catch (SocketException e) {
+                        Log.e("PacketReader", e.toString());
+                        connection.disconnect();
+                        xmppManager.startReconnectionThread();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 try {
                     // Sleep until we should write the next keep-alive.
                     Thread.sleep(delay);
-                }
-                catch (InterruptedException ie) {
+                } catch (InterruptedException ie) {
                     // Do nothing
                 }
             }

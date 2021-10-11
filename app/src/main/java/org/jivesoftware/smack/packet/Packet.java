@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -62,7 +62,7 @@ public abstract class Packet {
      * answer will be <tt>null</tt>.
      */
     public static final String ID_NOT_AVAILABLE = "ID_NOT_AVAILABLE";
-    
+
     /**
      * Date format as defined in XEP-0082 - XMPP Date and Time Profiles.
      * The time zone is set to UTC.
@@ -71,7 +71,8 @@ public abstract class Packet {
      * it must be synchronized externally. 
      */
     public static final DateFormat XEP_0082_UTC_FORMAT = new SimpleDateFormat(
-                    "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
     static {
         XEP_0082_UTC_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
@@ -110,7 +111,7 @@ public abstract class Packet {
     private final List<PacketExtension> packetExtensions
             = new CopyOnWriteArrayList<PacketExtension>();
 
-    private final Map<String,Object> properties = new HashMap<String, Object>();
+    private final Map<String, Object> properties = new HashMap<String, Object>();
     private XMPPError error = null;
 
     /**
@@ -261,8 +262,7 @@ public abstract class Packet {
         }
         for (PacketExtension ext : packetExtensions) {
             if ((elementName == null || elementName.equals(ext.getElementName()))
-                    && namespace.equals(ext.getNamespace()))
-            {
+                    && namespace.equals(ext.getNamespace())) {
                 return ext;
             }
         }
@@ -283,7 +283,7 @@ public abstract class Packet {
      *
      * @param extension the packet extension to remove.
      */
-    public void removeExtension(PacketExtension extension)  {
+    public void removeExtension(PacketExtension extension) {
         packetExtensions.remove(extension);
     }
 
@@ -374,22 +374,17 @@ public abstract class Packet {
                 buf.append("<value type=\"");
                 if (value instanceof Integer) {
                     buf.append("integer\">").append(value).append("</value>");
-                }
-                else if (value instanceof Long) {
+                } else if (value instanceof Long) {
                     buf.append("long\">").append(value).append("</value>");
-                }
-                else if (value instanceof Float) {
+                } else if (value instanceof Float) {
                     buf.append("float\">").append(value).append("</value>");
-                }
-                else if (value instanceof Double) {
+                } else if (value instanceof Double) {
                     buf.append("double\">").append(value).append("</value>");
-                }
-                else if (value instanceof Boolean) {
+                } else if (value instanceof Boolean) {
                     buf.append("boolean\">").append(value).append("</value>");
-                }
-                else if (value instanceof String) {
+                } else if (value instanceof String) {
                     buf.append("string\">");
-                    buf.append(StringUtils.escapeForXML((String)value));
+                    buf.append(StringUtils.escapeForXML((String) value));
                     buf.append("</value>");
                 }
                 // Otherwise, it's a generic Serializable object. Serialized objects are in
@@ -405,24 +400,20 @@ public abstract class Packet {
                         buf.append("java-object\">");
                         String encodedVal = StringUtils.encodeBase64(byteStream.toByteArray());
                         buf.append(encodedVal).append("</value>");
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
-                    }
-                    finally {
+                    } finally {
                         if (out != null) {
                             try {
                                 out.close();
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 // Ignore.
                             }
                         }
                         if (byteStream != null) {
                             try {
                                 byteStream.close();
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 // Ignore.
                             }
                         }
@@ -450,9 +441,15 @@ public abstract class Packet {
 
         Packet packet = (Packet) o;
 
-        if (error != null ? !error.equals(packet.error) : packet.error != null) { return false; }
-        if (from != null ? !from.equals(packet.from) : packet.from != null) { return false; }
-        if (!packetExtensions.equals(packet.packetExtensions)) { return false; }
+        if (error != null ? !error.equals(packet.error) : packet.error != null) {
+            return false;
+        }
+        if (from != null ? !from.equals(packet.from) : packet.from != null) {
+            return false;
+        }
+        if (!packetExtensions.equals(packet.packetExtensions)) {
+            return false;
+        }
         if (packetID != null ? !packetID.equals(packet.packetID) : packet.packetID != null) {
             return false;
         }
@@ -460,7 +457,9 @@ public abstract class Packet {
                 : packet.properties != null) {
             return false;
         }
-        if (to != null ? !to.equals(packet.to) : packet.to != null)  { return false; }
+        if (to != null ? !to.equals(packet.to) : packet.to != null) {
+            return false;
+        }
         return !(xmlns != null ? !xmlns.equals(packet.xmlns) : packet.xmlns != null);
     }
 

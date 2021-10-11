@@ -29,10 +29,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- * Service that continues to run in background and respond to the push 
+ * Service that continues to run in background and respond to the push
  * notification events from the server. This should be registered as service
- * in AndroidManifest.xml. 
- * 
+ * in AndroidManifest.xml.
+ *
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public class NotificationService extends Service {
@@ -127,7 +127,7 @@ public class NotificationService extends Service {
     public void onDestroy() {
         Log.d(LOGTAG, "onDestroy()...");
         stop();
-    } 
+    }
 
     @Override
     public IBinder onBind(Intent intent) {

@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision: $
  * $Date: $
- *
+ * <p>
  * Copyright 2003-2005 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -61,18 +61,15 @@ class ServerTrustManager implements X509TrustManager {
             trustStore = KeyStore.getInstance(configuration.getTruststoreType());
             in = new FileInputStream(configuration.getTruststorePath());
             trustStore.load(in, configuration.getTruststorePassword().toCharArray());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             // Disable root CA checking
             configuration.setVerifyRootCAEnabled(false);
-        }
-        finally {
+        } finally {
             if (in != null) {
                 try {
                     in.close();
-                }
-                catch (IOException ioe) {
+                } catch (IOException ioe) {
                     // Ignore.
                 }
             }
@@ -99,7 +96,7 @@ class ServerTrustManager implements X509TrustManager {
             // verify that the subject of the certificate is the issuer of the
             // next certificate in the chain.
             Principal principalLast = null;
-            for (int i = nSize -1; i >= 0 ; i--) {
+            for (int i = nSize - 1; i >= 0; i--) {
                 X509Certificate x509certificate = x509Certificates[i];
                 Principal principalIssuer = x509certificate.getIssuerDN();
                 Principal principalSubject = x509certificate.getSubjectDN();
@@ -109,13 +106,11 @@ class ServerTrustManager implements X509TrustManager {
                             PublicKey publickey =
                                     x509Certificates[i + 1].getPublicKey();
                             x509Certificates[i].verify(publickey);
-                        }
-                        catch (GeneralSecurityException generalsecurityexception) {
+                        } catch (GeneralSecurityException generalsecurityexception) {
                             throw new CertificateException(
                                     "signature verification failed of " + peerIdentities);
                         }
-                    }
-                    else {
+                    } else {
                         throw new CertificateException(
                                 "subject/issuer verification failed of " + peerIdentities);
                     }
@@ -130,14 +125,12 @@ class ServerTrustManager implements X509TrustManager {
             boolean trusted = false;
             try {
                 trusted = trustStore.getCertificateAlias(x509Certificates[nSize - 1]) != null;
-                if (!trusted && nSize == 1 && configuration.isSelfSignedCertificateEnabled())
-                {
+                if (!trusted && nSize == 1 && configuration.isSelfSignedCertificateEnabled()) {
                     System.out.println("Accepting self-signed certificate of remote server: " +
                             peerIdentities);
                     trusted = true;
                 }
-            }
-            catch (KeyStoreException e) {
+            } catch (KeyStoreException e) {
                 e.printStackTrace();
             }
             if (!trusted) {
@@ -156,8 +149,7 @@ class ServerTrustManager implements X509TrustManager {
                 if (!server.endsWith(peerIdentity)) {
                     throw new CertificateException("target verification failed of " + peerIdentities);
                 }
-            }
-            else if (!peerIdentities.contains(server)) {
+            } else if (!peerIdentities.contains(server)) {
                 throw new CertificateException("target verification failed of " + peerIdentities);
             }
         }
@@ -169,8 +161,7 @@ class ServerTrustManager implements X509TrustManager {
             for (int i = 0; i < nSize; i++) {
                 try {
                     x509Certificates[i].checkValidity(date);
-                }
-                catch (GeneralSecurityException generalsecurityexception) {
+                } catch (GeneralSecurityException generalsecurityexception) {
                     throw new CertificateException("invalid date of " + server);
                 }
             }
@@ -249,8 +240,7 @@ class ServerTrustManager implements X509TrustManager {
                 // Other types are not good for XMPP so ignore them
                 System.out.println("SubjectAltName of invalid type found: " + certificate);
             }*/
-        }
-        catch (CertificateParsingException e) {
+        } catch (CertificateParsingException e) {
             e.printStackTrace();
         }
         return identities;

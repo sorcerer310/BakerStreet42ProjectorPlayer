@@ -54,10 +54,10 @@ public class AndroidDebugger implements SmackDebugger {
         ObservableReader debugReader = new ObservableReader(reader);
         readerListener = new ReaderListener() {
             public void read(String str) {
-            	Log.d("SMACK",
+                Log.d("SMACK",
                         dateFormatter.format(new Date()) + " RCV  (" + connection.hashCode() +
-                        "): " +
-                        str);
+                                "): " +
+                                str);
             }
         };
         debugReader.addReaderListener(readerListener);
@@ -66,10 +66,10 @@ public class AndroidDebugger implements SmackDebugger {
         ObservableWriter debugWriter = new ObservableWriter(writer);
         writerListener = new WriterListener() {
             public void write(String str) {
-            	Log.d("SMACK",
+                Log.d("SMACK",
                         dateFormatter.format(new Date()) + " SENT (" + connection.hashCode() +
-                        "): " +
-                        str);
+                                "): " +
+                                str);
             }
         };
         debugWriter.addWriterListener(writerListener);
@@ -85,11 +85,11 @@ public class AndroidDebugger implements SmackDebugger {
         listener = new PacketListener() {
             public void processPacket(Packet packet) {
                 if (printInterpreted) {
-                	Log.d("SMACK",
+                    Log.d("SMACK",
                             dateFormatter.format(new Date()) + " RCV PKT (" +
-                            connection.hashCode() +
-                            "): " +
-                            packet.toXML());
+                                    connection.hashCode() +
+                                    "): " +
+                                    packet.toXML());
                 }
             }
         };
@@ -98,43 +98,46 @@ public class AndroidDebugger implements SmackDebugger {
             public void connectionClosed() {
                 Log.d("SMACK",
                         dateFormatter.format(new Date()) + " Connection closed (" +
-                        connection.hashCode() +
-                        ")");
+                                connection.hashCode() +
+                                ")");
             }
 
             public void connectionClosedOnError(Exception e) {
                 Log.d("SMACK",
                         dateFormatter.format(new Date()) +
-                        " Connection closed due to an exception (" +
-                        connection.hashCode() +
-                        ")");
+                                " Connection closed due to an exception (" +
+                                connection.hashCode() +
+                                ")");
                 e.printStackTrace();
             }
+
             public void reconnectionFailed(Exception e) {
                 Log.d("SMACK",
                         dateFormatter.format(new Date()) +
-                        " Reconnection failed due to an exception (" +
-                        connection.hashCode() +
-                        ")");
+                                " Reconnection failed due to an exception (" +
+                                connection.hashCode() +
+                                ")");
                 e.printStackTrace();
             }
+
             public void reconnectionSuccessful() {
                 Log.d("SMACK",
                         dateFormatter.format(new Date()) + " Connection reconnected (" +
-                        connection.hashCode() +
-                        ")");
+                                connection.hashCode() +
+                                ")");
             }
+
             public void reconnectingIn(int seconds) {
                 Log.d("SMACK",
                         dateFormatter.format(new Date()) + " Connection (" +
-                        connection.hashCode() +
-                        ") will reconnect in " + seconds);
+                                connection.hashCode() +
+                                ") will reconnect in " + seconds);
             }
         };
     }
 
     public Reader newConnectionReader(Reader newReader) {
-        ((ObservableReader)reader).removeReaderListener(readerListener);
+        ((ObservableReader) reader).removeReaderListener(readerListener);
         ObservableReader debugReader = new ObservableReader(newReader);
         debugReader.addReaderListener(readerListener);
         reader = debugReader;
@@ -142,7 +145,7 @@ public class AndroidDebugger implements SmackDebugger {
     }
 
     public Writer newConnectionWriter(Writer newWriter) {
-        ((ObservableWriter)writer).removeWriterListener(writerListener);
+        ((ObservableWriter) writer).removeWriterListener(writerListener);
         ObservableWriter debugWriter = new ObservableWriter(newWriter);
         debugWriter.addWriterListener(writerListener);
         writer = debugWriter;
@@ -153,11 +156,11 @@ public class AndroidDebugger implements SmackDebugger {
         boolean isAnonymous = "".equals(StringUtils.parseName(user));
         String title =
                 "User logged (" + connection.hashCode() + "): "
-                + (isAnonymous ? "" : StringUtils.parseBareAddress(user))
-                + "@"
-                + connection.getServiceName()
-                + ":"
-                + connection.getPort();
+                        + (isAnonymous ? "" : StringUtils.parseBareAddress(user))
+                        + "@"
+                        + connection.getServiceName()
+                        + ":"
+                        + connection.getPort();
         title += "/" + StringUtils.parseResource(user);
         Log.d("SMACK", title);
         // Add the connection listener to the connection so that the debugger can be notified

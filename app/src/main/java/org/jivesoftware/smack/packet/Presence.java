@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -100,7 +100,7 @@ public class Presence extends Packet {
      * @return true if the presence type is available.
      */
     public boolean isAvailable() {
-        return type == Type.available;    
+        return type == Type.available;
     }
 
     /**
@@ -114,7 +114,7 @@ public class Presence extends Packet {
      * @return true if the presence type is available and the presence mode is away, xa, or dnd.
      */
     public boolean isAway() {
-        return type == Type.available && (mode == Mode.away || mode == Mode.xa || mode == Mode.dnd); 
+        return type == Type.available && (mode == Mode.away || mode == Mode.xa || mode == Mode.dnd);
     }
 
     /**
@@ -132,7 +132,7 @@ public class Presence extends Packet {
      * @param type the type of the presence packet.
      */
     public void setType(Type type) {
-        if(type == null) {
+        if (type == null) {
             throw new NullPointerException("Type cannot be null");
         }
         this.type = type;
@@ -226,7 +226,7 @@ public class Presence extends Packet {
     public String toXML() {
         StringBuilder buf = new StringBuilder();
         buf.append("<presence");
-        if(getXmlns() != null) {
+        if (getXmlns() != null) {
             buf.append(" xmlns=\"").append(getXmlns()).append("\"");
         }
         if (language != null) {
@@ -264,7 +264,7 @@ public class Presence extends Packet {
         }
 
         buf.append("</presence>");
-        
+
         return buf.toString();
     }
 
@@ -289,9 +289,9 @@ public class Presence extends Packet {
      */
     public enum Type {
 
-       /**
-        * The user is available to receive messages (default).
-        */
+        /**
+         * The user is available to receive messages (default).
+         */
         available,
 
         /**

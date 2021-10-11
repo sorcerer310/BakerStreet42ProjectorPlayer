@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -119,7 +119,7 @@ public class Message extends Packet {
     public String getSubject() {
         return getSubject(null);
     }
-    
+
     /**
      * Returns the subject corresponding to the language. If the language is null, the method result
      * will be the same as {@link #getSubject()}. Null will be returned if the language does not have
@@ -132,7 +132,7 @@ public class Message extends Packet {
         Subject subject = getMessageSubject(language);
         return subject == null ? null : subject.subject;
     }
-    
+
     private Subject getMessageSubject(String language) {
         language = determineLanguage(language);
         for (Subject subject : subjects) {
@@ -251,7 +251,7 @@ public class Message extends Packet {
         Body body = getMessageBody(language);
         return body == null ? null : body.message;
     }
-    
+
     private Body getMessageBody(String language) {
         language = determineLanguage(language);
         for (Body body : bodies) {
@@ -387,21 +387,19 @@ public class Message extends Packet {
     }
 
     private String determineLanguage(String language) {
-        
+
         // empty string is passed by #setSubject() and #setBody() and is the same as null
         language = "".equals(language) ? null : language;
 
         // if given language is null check if message language is set
         if (language == null && this.language != null) {
             return this.language;
-        }
-        else if (language == null) {
+        } else if (language == null) {
             return getDefaultLanguage();
-        }
-        else {
+        } else {
             return language;
         }
-        
+
     }
 
     public String toXML() {
@@ -428,15 +426,15 @@ public class Message extends Packet {
         buf.append(">");
         // Add the subject in the default language
         Subject defaultSubject = getMessageSubject(null);
-        if(defaultSubject!=null){
-        	buf.append("<subject>").append(StringUtils.escapeForXML(defaultSubject.getSubject()));
-        	buf.append("</subject>");
+        if (defaultSubject != null) {
+            buf.append("<subject>").append(StringUtils.escapeForXML(defaultSubject.getSubject()));
+            buf.append("</subject>");
         }
         //Add subjects in other languages
-        for ( Subject s : getSubjects()){
-        	buf.append("<subject xml:lang=\""+s.getLanguage()+"\">");
-        	buf.append(StringUtils.escapeForXML(s.getSubject()));
-        	buf.append("</subject>");
+        for (Subject s : getSubjects()) {
+            buf.append("<subject xml:lang=\"" + s.getLanguage() + "\">");
+            buf.append(StringUtils.escapeForXML(s.getSubject()));
+            buf.append("</subject>");
         }
         // Add the body in the default language
         Body defaultBody = getMessageBody(null);
@@ -446,7 +444,7 @@ public class Message extends Packet {
         // Add the bodies in other languages
         for (Body body : getBodies()) {
             // Skip the default language
-            if(body.equals(defaultBody))
+            if (body.equals(defaultBody))
                 continue;
             buf.append("<body xml:lang=\"").append(body.getLanguage()).append("\">");
             buf.append(StringUtils.escapeForXML(body.getMessage()));
@@ -475,7 +473,9 @@ public class Message extends Packet {
 
         Message message = (Message) o;
 
-        if(!super.equals(message)) { return false; }
+        if (!super.equals(message)) {
+            return false;
+        }
         if (bodies.size() != message.bodies.size() || !bodies.containsAll(message.bodies)) {
             return false;
         }
@@ -542,7 +542,9 @@ public class Message extends Packet {
 
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) { return false; }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             Subject otherSubject = (Subject) o;
 
@@ -600,7 +602,9 @@ public class Message extends Packet {
 
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) { return false; }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             Body otherBody = (Body) o;
 
@@ -617,7 +621,7 @@ public class Message extends Packet {
             result = 31 * result + (language != null ? language.hashCode() : 0);
             return result;
         }
-        
+
     }
 
     /**
@@ -653,8 +657,7 @@ public class Message extends Packet {
         public static Type fromString(String name) {
             try {
                 return Type.valueOf(name);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 return normal;
             }
         }

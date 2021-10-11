@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision: 3306 $
  * $Date: 2006-01-16 14:34:56 -0300 (Mon, 16 Jan 2006) $
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,9 @@ import org.jivesoftware.smack.proxy.ProxyInfo;
 import org.jivesoftware.smack.util.DNSUtil;
 
 import javax.net.SocketFactory;
+
 import org.apache.harmony.javax.security.auth.callback.CallbackHandler;
+
 import java.io.File;
 
 /**
@@ -74,10 +76,10 @@ public class ConnectionConfiguration implements Cloneable {
 
     // Flag that indicates if a reconnection should be attempted when abruptly disconnected
     private boolean reconnectionAllowed = true;
-    
+
     // Holds the socket factory that is used to generate the socket in the connection
     private SocketFactory socketFactory;
-    
+
     // Holds the authentication information for future reconnections
     private String username;
     private String password;
@@ -85,8 +87,8 @@ public class ConnectionConfiguration implements Cloneable {
     private boolean sendPresence = true;
     private boolean rosterLoadedAtLogin = true;
     private SecurityMode securityMode = SecurityMode.enabled;
-	
-	// Holds the proxy information (such as proxyhost, proxyport, username, password etc)
+
+    // Holds the proxy information (such as proxyhost, proxyport, username, password etc)
     protected ProxyInfo proxy;
 
     /**
@@ -99,11 +101,11 @@ public class ConnectionConfiguration implements Cloneable {
     public ConnectionConfiguration(String serviceName) {
         // Perform DNS lookup to get host and port to use
         DNSUtil.HostAddress address = DNSUtil.resolveXMPPDomain(serviceName);
-        init(address.getHost(), address.getPort(), serviceName, 
-			ProxyInfo.forDefaultProxy());
+        init(address.getHost(), address.getPort(), serviceName,
+                ProxyInfo.forDefaultProxy());
     }
-	
-	/**
+
+    /**
      * Creates a new ConnectionConfiguration for the specified service name 
      * with specified proxy.
      * A DNS SRV lookup will be performed to find out the actual host address
@@ -112,7 +114,7 @@ public class ConnectionConfiguration implements Cloneable {
      * @param serviceName the name of the service provided by an XMPP server.
      * @param proxy the proxy through which XMPP is to be connected
      */
-    public ConnectionConfiguration(String serviceName,ProxyInfo proxy) {
+    public ConnectionConfiguration(String serviceName, ProxyInfo proxy) {
         // Perform DNS lookup to get host and port to use
         DNSUtil.HostAddress address = DNSUtil.resolveXMPPDomain(serviceName);
         init(address.getHost(), address.getPort(), serviceName, proxy);
@@ -135,8 +137,8 @@ public class ConnectionConfiguration implements Cloneable {
     public ConnectionConfiguration(String host, int port, String serviceName) {
         init(host, port, serviceName, ProxyInfo.forDefaultProxy());
     }
-	
-	/**
+
+    /**
      * Creates a new ConnectionConfiguration using the specified host, port and
      * service name. This is useful for manually overriding the DNS SRV lookup
      * process that's used with the {@link #ConnectionConfiguration(String)}
@@ -165,8 +167,8 @@ public class ConnectionConfiguration implements Cloneable {
     public ConnectionConfiguration(String host, int port) {
         init(host, port, host, ProxyInfo.forDefaultProxy());
     }
-	
-	/**
+
+    /**
      * Creates a new ConnectionConfiguration for a connection that will connect
      * to the desired host and port with desired proxy.
      *
@@ -199,8 +201,8 @@ public class ConnectionConfiguration implements Cloneable {
         keystorePath = System.getProperty("javax.net.ssl.keyStore");
         keystoreType = "jks";
         pkcs11Library = "pkcs11.config";
-		
-		//Setting the SocketFactory according to proxy supplied
+
+        //Setting the SocketFactory according to proxy supplied
         socketFactory = proxy.getSocketFactory();
     }
 
@@ -555,16 +557,17 @@ public class ConnectionConfiguration implements Cloneable {
     public void setDebuggerEnabled(boolean debuggerEnabled) {
         this.debuggerEnabled = debuggerEnabled;
     }
-    
+
     /**
      * Sets if the reconnection mechanism is allowed to be used. By default
      * reconnection is allowed.
-     * 
+     *
      * @param isAllowed if the reconnection mechanism is allowed to use.
      */
     public void setReconnectionAllowed(boolean isAllowed) {
         this.reconnectionAllowed = isAllowed;
     }
+
     /**
      * Returns if the reconnection mechanism is allowed to be used. By default
      * reconnection is allowed.
@@ -574,7 +577,7 @@ public class ConnectionConfiguration implements Cloneable {
     public boolean isReconnectionAllowed() {
         return this.reconnectionAllowed;
     }
-    
+
     /**
      * Sets the socket factory used to create new xmppConnection sockets.
      * This is useful when connecting through SOCKS5 proxies.
@@ -648,7 +651,7 @@ public class ConnectionConfiguration implements Cloneable {
     /**
      * Returns the socket factory used to create new xmppConnection sockets.
      * This is useful when connecting through SOCKS5 proxies.
-     * 
+     *
      * @return socketFactory used to create new sockets.
      */
     public SocketFactory getSocketFactory() {
@@ -708,21 +711,21 @@ public class ConnectionConfiguration implements Cloneable {
     String getResource() {
         return resource;
     }
-    
-    boolean isRosterVersioningAvailable(){
-    	return isRosterVersioningAvailable;
+
+    boolean isRosterVersioningAvailable() {
+        return isRosterVersioningAvailable;
     }
-    
-    void setRosterVersioningAvailable(boolean enabled){
-    	isRosterVersioningAvailable = enabled;
+
+    void setRosterVersioningAvailable(boolean enabled) {
+        isRosterVersioningAvailable = enabled;
     }
-    
-    void setCapsNode(String node){
-    	capsNode = node;
+
+    void setCapsNode(String node) {
+        capsNode = node;
     }
-    
-    String getCapsNode(){
-    	return capsNode;
+
+    String getCapsNode() {
+        return capsNode;
     }
 
     /**

@@ -20,34 +20,38 @@ public class DeviceUtils {
 
     //锁屏部分-------------------------
     //继承了设备管理器的广播类，没做任何操作
-    public static class AdminReceiver extends DeviceAdminReceiver{}
-    private  static DevicePolicyManager policyManager;
+    public static class AdminReceiver extends DeviceAdminReceiver {
+    }
+
+    private static DevicePolicyManager policyManager;
     private static ComponentName componentName;
     private static final int MY_REQUEST_CODE = 9999;
 
     /**
      * 初始化锁屏
+     *
      * @param context
      */
-    public static void initLockScreen(Context context){
+    public static void initLockScreen(Context context) {
         policyManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-        componentName = new ComponentName(context,DeviceUtils.AdminReceiver.class);
+        componentName = new ComponentName(context, DeviceUtils.AdminReceiver.class);
     }
 
     /**
      * 激活设备管理器，设置app为激活状态
      */
-    public static void activeDeviceManager(Activity activity){
+    public static void activeDeviceManager(Activity activity) {
         Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,componentName);
-        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"激活一键锁屏");
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "激活一键锁屏");
         activity.startActivityForResult(intent, MY_REQUEST_CODE);
     }
 
     /**
      * 判断是否处于锁屏状态
+     *
      * @param c
-     * @return	返回ture为锁屏,返回flase为未锁屏
+     * @return 返回ture为锁屏, 返回flase为未锁屏
      */
     public final static boolean isScreenLocked(Context c) {
         KeyguardManager km = (KeyguardManager) c.getSystemService(c.KEYGUARD_SERVICE);
@@ -56,29 +60,31 @@ public class DeviceUtils {
 
     /**
      * 被Activity的onActivityResult函数调用
+     *
      * @param activity
      * @param requestCode
      * @param resultCode
      * @param data
      */
-    public static void onActivityResult(Activity activity,int requestCode,int resultCode,Intent data){
-        if(requestCode==MY_REQUEST_CODE && resultCode== Activity.RESULT_OK){
+    public static void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        if (requestCode == MY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             policyManager.lockNow();
             activity.finish();
-        }else{
+        } else {
             activity.finish();
         }
     }
 
     /**
      * 锁定屏幕操作
+     *
      * @param activity
      */
-    public static void lockScreen(Activity activity){
-        if(policyManager.isAdminActive(componentName)){
+    public static void lockScreen(Activity activity) {
+        if (policyManager.isAdminActive(componentName)) {
             policyManager.lockNow();
             activity.finish();
-        }else{
+        } else {
             activeDeviceManager(activity);
         }
     }
@@ -91,38 +97,41 @@ public class DeviceUtils {
 
     /**
      * 初始化唤醒屏幕
+     *
      * @param activity
      */
-    public static void initWakeScrenUnlock(Activity activity){
+    public static void initWakeScrenUnlock(Activity activity) {
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         pm = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
-        wakeLock = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK,"bright");
+        wakeLock = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
         wakeLock.acquire();
     }
 
     /**
      * 唤醒屏幕
      */
-    public static void wakeScreen(Activity activity){
+    public static void wakeScreen(Activity activity) {
 
         //屏幕唤醒
-        if(wakeLock==null) {
+        if (wakeLock == null) {
             pm = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
-            wakeLock = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK,"bright");
+            wakeLock = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
         }
         wakeLock.acquire();
         wakeLock.release();
 
         //屏幕解锁
-        km= (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
+        km = (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
         KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
         kl.disableKeyguard();
     }
     //唤醒屏幕部分----------------------
 
     //手机振动部分部分----------------------
+
     /**
      * 手机震动函数
+     *
      * @param activity
      * @param milliseconds
      */

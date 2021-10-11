@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -58,7 +58,7 @@ public class Roster {
 
     private Connection connection;
     private final Map<String, RosterGroup> groups;
-    private final Map<String,RosterEntry> entries;
+    private final Map<String, RosterEntry> entries;
     private final List<RosterEntry> unfiledEntries;
     private final List<RosterListener> rosterListeners;
     private Map<String, Map<String, Presence>> presenceMap;
@@ -68,7 +68,7 @@ public class Roster {
     private PresencePacketListener presencePacketListener;
 
     private SubscriptionMode subscriptionMode = getDefaultSubscriptionMode();
-    
+
     private String requestPacketId;
 
     /**
@@ -94,10 +94,10 @@ public class Roster {
     public static void setDefaultSubscriptionMode(SubscriptionMode subscriptionMode) {
         defaultSubscriptionMode = subscriptionMode;
     }
-    
-    Roster(final Connection connection, RosterStorage persistentStorage){
-    	this(connection);
-    	this.persistentStorage = persistentStorage;
+
+    Roster(final Connection connection, RosterStorage persistentStorage) {
+        this(connection);
+        this.persistentStorage = persistentStorage;
     }
 
     /**
@@ -108,12 +108,12 @@ public class Roster {
     Roster(final Connection connection) {
         this.connection = connection;
         //Disable roster versioning if server doesn't offer support for it
-        if(!connection.getConfiguration().isRosterVersioningAvailable()){
-        	persistentStorage=null;
+        if (!connection.getConfiguration().isRosterVersioningAvailable()) {
+            persistentStorage = null;
         }
         groups = new ConcurrentHashMap<String, RosterGroup>();
         unfiledEntries = new CopyOnWriteArrayList<RosterEntry>();
-        entries = new ConcurrentHashMap<String,RosterEntry>();
+        entries = new ConcurrentHashMap<String, RosterEntry>();
         rosterListeners = new CopyOnWriteArrayList<RosterListener>();
         presenceMap = new ConcurrentHashMap<String, Map<String, Presence>>();
         // Listen for any roster packets.
@@ -147,7 +147,7 @@ public class Roster {
                 // Ignore
             }
         });
-        
+
     }
 
     /**
@@ -186,13 +186,13 @@ public class Roster {
      * reloaded at a later point when the server responds to the reload request.
      */
     public void reload() {
-    	RosterPacket packet = new RosterPacket();
-    	if(persistentStorage!=null){
-    		packet.setVersion(persistentStorage.getRosterVersion());
-    	}
-    	requestPacketId = packet.getPacketID();
-    	PacketFilter idFilter = new PacketIDFilter(requestPacketId);
-    	connection.addPacketListener(new RosterResultListener(), idFilter);
+        RosterPacket packet = new RosterPacket();
+        if (persistentStorage != null) {
+            packet.setVersion(persistentStorage.getRosterVersion());
+        }
+        requestPacketId = packet.getPacketID();
+        PacketFilter idFilter = new PacketIDFilter(requestPacketId);
+        connection.addPacketListener(new RosterResultListener(), idFilter);
         connection.sendPacket(packet);
     }
 
@@ -278,21 +278,21 @@ public class Roster {
         presencePacket.setTo(user);
         connection.sendPacket(presencePacket);
     }
-    
-    private void insertRosterItems(List<RosterPacket.Item> items){
-    	 Collection<String> addedEntries = new ArrayList<String>();
-         Collection<String> updatedEntries = new ArrayList<String>();
-         Collection<String> deletedEntries = new ArrayList<String>();
-         Iterator<RosterPacket.Item> iter = items.iterator();
-         while(iter.hasNext()){
-        	 insertRosterItem(iter.next(), addedEntries,updatedEntries,deletedEntries);
-         }
-         fireRosterChangedEvent(addedEntries, updatedEntries, deletedEntries);
+
+    private void insertRosterItems(List<RosterPacket.Item> items) {
+        Collection<String> addedEntries = new ArrayList<String>();
+        Collection<String> updatedEntries = new ArrayList<String>();
+        Collection<String> deletedEntries = new ArrayList<String>();
+        Iterator<RosterPacket.Item> iter = items.iterator();
+        while (iter.hasNext()) {
+            insertRosterItem(iter.next(), addedEntries, updatedEntries, deletedEntries);
+        }
+        fireRosterChangedEvent(addedEntries, updatedEntries, deletedEntries);
     }
-    
+
     private void insertRosterItem(RosterPacket.Item item, Collection<String> addedEntries,
-    		Collection<String> updatedEntries, Collection<String> deletedEntries){
-    	RosterEntry entry = new RosterEntry(item.getUser(), item.getName(),
+                                  Collection<String> updatedEntries, Collection<String> deletedEntries) {
+        RosterEntry entry = new RosterEntry(item.getUser(), item.getName(),
                 item.getItemType(), item.getItemStatus(), this, connection);
 
         // If the packet is of the type REMOVE then remove the entry
@@ -311,26 +311,24 @@ public class Roster {
                     StringUtils.parseServer(item.getUser());
             presenceMap.remove(key);
             // Keep note that an entry has been removed
-            if(deletedEntries!=null){
-            	deletedEntries.add(item.getUser());
+            if (deletedEntries != null) {
+                deletedEntries.add(item.getUser());
             }
-        }
-        else {
+        } else {
             // Make sure the entry is in the entry list.
             if (!entries.containsKey(item.getUser())) {
                 entries.put(item.getUser(), entry);
                 // Keep note that an entry has been added
-                if(addedEntries!=null){
-                	addedEntries.add(item.getUser());
+                if (addedEntries != null) {
+                    addedEntries.add(item.getUser());
                 }
-            }
-            else {
+            } else {
                 // If the entry was in then list then update its state with the new values
                 entries.put(item.getUser(), entry);
-                
+
                 // Keep note that an entry has been updated
-                if(updatedEntries!=null){
-                	updatedEntries.add(item.getUser());
+                if (updatedEntries != null) {
+                    updatedEntries.add(item.getUser());
                 }
             }
             // If the roster entry belongs to any groups, remove it from the
@@ -348,7 +346,7 @@ public class Roster {
 
         // Find the list of groups that the user currently belongs to.
         List<String> currentGroupNames = new ArrayList<String>();
-        for (RosterGroup group: getGroups()) {
+        for (RosterGroup group : getGroups()) {
             if (group.contains(entry)) {
                 currentGroupNames.add(group.getName());
             }
@@ -441,7 +439,7 @@ public class Roster {
      * @return the number of entries in the roster.
      */
     public int getEntryCount() {
-		return getEntries().size();
+        return getEntries().size();
     }
 
     /**
@@ -494,7 +492,7 @@ public class Roster {
         if (user == null) {
             return null;
         }
-    	return entries.get(user.toLowerCase());
+        return entries.get(user.toLowerCase());
     }
 
     /**
@@ -517,7 +515,7 @@ public class Roster {
      * @return the roster group with the specified name.
      */
     public RosterGroup getGroup(String name) {
-		return groups.get(name);
+        return groups.get(name);
     }
 
     /**
@@ -526,7 +524,7 @@ public class Roster {
      * @return the number of groups in the roster.
      */
     public int getGroupCount() {
-		return groups.size();
+        return groups.size();
     }
 
     /**
@@ -535,7 +533,7 @@ public class Roster {
      * @return an iterator for all roster groups.
      */
     public Collection<RosterGroup> getGroups() {
-		return Collections.unmodifiableCollection(groups.values());
+        return Collections.unmodifiableCollection(groups.values());
     }
 
     /**
@@ -573,8 +571,7 @@ public class Roster {
             Presence presence = new Presence(Presence.Type.unavailable);
             presence.setFrom(user);
             return presence;
-        }
-        else {
+        } else {
             // Find the resource with the highest priority
             // Might be changed to use the resource with the highest availability instead.
             Presence presence = null;
@@ -609,8 +606,7 @@ public class Roster {
                 presence = new Presence(Presence.Type.unavailable);
                 presence.setFrom(user);
                 return presence;
-            }
-            else {
+            } else {
                 return presence;
             }
         }
@@ -633,15 +629,13 @@ public class Roster {
             Presence presence = new Presence(Presence.Type.unavailable);
             presence.setFrom(userWithResource);
             return presence;
-        }
-        else {
+        } else {
             Presence presence = userPresences.get(resource);
             if (presence == null) {
                 presence = new Presence(Presence.Type.unavailable);
                 presence.setFrom(userWithResource);
                 return presence;
-            }
-            else {
+            } else {
                 return presence;
             }
         }
@@ -665,8 +659,7 @@ public class Roster {
             Presence presence = new Presence(Presence.Type.unavailable);
             presence.setFrom(user);
             return Arrays.asList(presence).iterator();
-        }
-        else {
+        } else {
             Collection<Presence> answer = new ArrayList<Presence>();
             for (Presence presence : userPresences.values()) {
                 if (presence.isAvailable()) {
@@ -675,11 +668,10 @@ public class Roster {
             }
             if (!answer.isEmpty()) {
                 return answer.iterator();
-            }
-            else {
+            } else {
                 Presence presence = new Presence(Presence.Type.unavailable);
                 presence.setFrom(user);
-                return Arrays.asList(presence).iterator();    
+                return Arrays.asList(presence).iterator();
             }
         }
     }
@@ -744,7 +736,7 @@ public class Roster {
      * @param deletedEntries the collection of address of the deleted contacts.
      */
     private void fireRosterChangedEvent(Collection<String> addedEntries, Collection<String> updatedEntries,
-            Collection<String> deletedEntries) {
+                                        Collection<String> deletedEntries) {
         for (RosterListener listener : rosterListeners) {
             if (!addedEntries.isEmpty()) {
                 listener.entriesAdded(addedEntries);
@@ -814,8 +806,7 @@ public class Roster {
                 if (presenceMap.get(key) == null) {
                     userPresences = new ConcurrentHashMap<String, Presence>();
                     presenceMap.put(key, userPresences);
-                }
-                else {
+                } else {
                     userPresences = presenceMap.get(key);
                 }
                 // See if an offline presence was being stored in the map. If so, remove
@@ -839,8 +830,7 @@ public class Roster {
                     if (presenceMap.get(key) == null) {
                         userPresences = new ConcurrentHashMap<String, Presence>();
                         presenceMap.put(key, userPresences);
-                    }
-                    else {
+                    } else {
                         userPresences = presenceMap.get(key);
                     }
                     userPresences.put("", presence);
@@ -857,23 +847,20 @@ public class Roster {
                 if (entry != null) {
                     fireRosterPresenceEvent(presence);
                 }
-            }
-            else if (presence.getType() == Presence.Type.subscribe) {
+            } else if (presence.getType() == Presence.Type.subscribe) {
                 if (subscriptionMode == SubscriptionMode.accept_all) {
                     // Accept all subscription requests.
                     Presence response = new Presence(Presence.Type.subscribed);
                     response.setTo(presence.getFrom());
                     connection.sendPacket(response);
-                }
-                else if (subscriptionMode == SubscriptionMode.reject_all) {
+                } else if (subscriptionMode == SubscriptionMode.reject_all) {
                     // Reject all subscription requests.
                     Presence response = new Presence(Presence.Type.unsubscribed);
                     response.setTo(presence.getFrom());
                     connection.sendPacket(response);
                 }
                 // Otherwise, in manual mode so ignore.
-            }
-            else if (presence.getType() == Presence.Type.unsubscribe) {
+            } else if (presence.getType() == Presence.Type.unsubscribe) {
                 if (subscriptionMode != SubscriptionMode.manual) {
                     // Acknowledge and accept unsubscription notification so that the
                     // server will stop sending notifications saying that the contact
@@ -887,14 +874,12 @@ public class Roster {
             // Error presence packets from a bare JID mean we invalidate all existing
             // presence info for the user.
             else if (presence.getType() == Presence.Type.error &&
-                    "".equals(StringUtils.parseResource(from)))
-            {
+                    "".equals(StringUtils.parseResource(from))) {
                 Map<String, Presence> userPresences;
                 if (!presenceMap.containsKey(key)) {
                     userPresences = new ConcurrentHashMap<String, Presence>();
                     presenceMap.put(key, userPresences);
-                }
-                else {
+                } else {
                     userPresences = presenceMap.get(key);
                     // Any other presence data is invalidated by the error packet.
                     userPresences.clear();
@@ -909,37 +894,37 @@ public class Roster {
             }
         }
     }
-    
+
     /**
      * Listen for empty IQ results which indicate that the client has already a current
      * roster version
      * @author Till Klocke
      *
      */
-    
-    private class RosterResultListener implements PacketListener{
 
-		public void processPacket(Packet packet) {
-			if(packet instanceof IQ){
-				IQ result = (IQ)packet;
-				if(result.getType().equals(IQ.Type.RESULT) && result.getExtensions().isEmpty()){
-					Collection<String> addedEntries = new ArrayList<String>();
-		            Collection<String> updatedEntries = new ArrayList<String>();
-		            Collection<String> deletedEntries = new ArrayList<String>();
-		            if(persistentStorage!=null){
-		            	for(RosterPacket.Item item : persistentStorage.getEntries()){
-		            		insertRosterItem(item,addedEntries,updatedEntries,deletedEntries);
-		            	}
-		            	synchronized (Roster.this) {
-		                    rosterInitialized = true;
-		                    Roster.this.notifyAll();
-		                }
-		            	fireRosterChangedEvent(addedEntries,updatedEntries,deletedEntries);
-		            }
-				}
-			}
-			connection.removePacketListener(this);
-		}
+    private class RosterResultListener implements PacketListener {
+
+        public void processPacket(Packet packet) {
+            if (packet instanceof IQ) {
+                IQ result = (IQ) packet;
+                if (result.getType().equals(IQ.Type.RESULT) && result.getExtensions().isEmpty()) {
+                    Collection<String> addedEntries = new ArrayList<String>();
+                    Collection<String> updatedEntries = new ArrayList<String>();
+                    Collection<String> deletedEntries = new ArrayList<String>();
+                    if (persistentStorage != null) {
+                        for (RosterPacket.Item item : persistentStorage.getEntries()) {
+                            insertRosterItem(item, addedEntries, updatedEntries, deletedEntries);
+                        }
+                        synchronized (Roster.this) {
+                            rosterInitialized = true;
+                            Roster.this.notifyAll();
+                        }
+                        fireRosterChangedEvent(addedEntries, updatedEntries, deletedEntries);
+                    }
+                }
+            }
+            connection.removePacketListener(this);
+        }
     }
 
     /**
@@ -953,46 +938,45 @@ public class Roster {
             Collection<String> addedEntries = new ArrayList<String>();
             Collection<String> updatedEntries = new ArrayList<String>();
             Collection<String> deletedEntries = new ArrayList<String>();
-           
-            String version=null;
+
+            String version = null;
             RosterPacket rosterPacket = (RosterPacket) packet;
             List<RosterPacket.Item> rosterItems = new ArrayList<RosterPacket.Item>();
-            for(RosterPacket.Item item : rosterPacket.getRosterItems()){
-            	rosterItems.add(item);
+            for (RosterPacket.Item item : rosterPacket.getRosterItems()) {
+                rosterItems.add(item);
             }
             //Here we check if the server send a versioned roster, if not we do not use
             //the roster storage to store entries and work like in the old times 
-            if(rosterPacket.getVersion()==null){
-            	persistentStorage=null;
-            } else{
-            	version = rosterPacket.getVersion();
+            if (rosterPacket.getVersion() == null) {
+                persistentStorage = null;
+            } else {
+                version = rosterPacket.getVersion();
             }
-            
-            if(persistentStorage!=null && !rosterInitialized){
-            	for(RosterPacket.Item item : persistentStorage.getEntries()){
-            		rosterItems.add(item);
-            	}
+
+            if (persistentStorage != null && !rosterInitialized) {
+                for (RosterPacket.Item item : persistentStorage.getEntries()) {
+                    rosterItems.add(item);
+                }
             }
-            
+
             for (RosterPacket.Item item : rosterItems) {
-            	insertRosterItem(item,addedEntries,updatedEntries,deletedEntries);
+                insertRosterItem(item, addedEntries, updatedEntries, deletedEntries);
             }
-            if(persistentStorage!=null){
-            	for (RosterPacket.Item i : rosterPacket.getRosterItems()){
-            		if(i.getItemType().equals(RosterPacket.ItemType.remove)){
-            			persistentStorage.removeEntry(i.getUser());
-            		}
-            		else{
-            			persistentStorage.addEntry(i, version);
-            		}
-            	}
+            if (persistentStorage != null) {
+                for (RosterPacket.Item i : rosterPacket.getRosterItems()) {
+                    if (i.getItemType().equals(RosterPacket.ItemType.remove)) {
+                        persistentStorage.removeEntry(i.getUser());
+                    } else {
+                        persistentStorage.addEntry(i, version);
+                    }
+                }
             }
             // Mark the roster as initialized.
             synchronized (Roster.this) {
                 rosterInitialized = true;
                 Roster.this.notifyAll();
             }
-           
+
             // Fire event for roster listeners.
             fireRosterChangedEvent(addedEntries, updatedEntries, deletedEntries);
         }

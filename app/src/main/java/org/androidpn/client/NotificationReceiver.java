@@ -29,10 +29,10 @@ import com.bsu.bk42projectorplayer.app.ProjectorPlayerActivity;
 
 import java.util.List;
 
-/** 
+/**
  * Broadcast receiver that handles push notification messages from the server.
- * This should be registered as receiver in AndroidManifest.xml. 
- * 
+ * This should be registered as receiver in AndroidManifest.xml.
+ *
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public final class NotificationReceiver extends BroadcastReceiver {
@@ -67,10 +67,10 @@ public final class NotificationReceiver extends BroadcastReceiver {
             String notificationUri = intent
                     .getStringExtra(Constants.NOTIFICATION_URI);
             String notificationFrom = intent
-            		.getStringExtra(Constants.NOTIFICATION_FROM);
+                    .getStringExtra(Constants.NOTIFICATION_FROM);
             String packetId = intent
-    				.getStringExtra(Constants.PACKET_ID);
-            
+                    .getStringExtra(Constants.PACKET_ID);
+
             Log.d(LOGTAG, "notificationId=" + notificationId);
             Log.d(LOGTAG, "notificationApiKey=" + notificationApiKey);
             Log.d(LOGTAG, "notificationTitle=" + notificationTitle);
@@ -82,12 +82,12 @@ public final class NotificationReceiver extends BroadcastReceiver {
 //                    notificationTitle, notificationMessage, notificationUri,notificationFrom,packetId);
 
             //直接转到对应的Activity
-            Intent nintent = new Intent(context,ProjectorPlayerActivity.class);
-            nintent.putExtra(Constants.NOTIFICATION_ID,notificationId);
-            nintent.putExtra(Constants.NOTIFICATION_API_KEY,notificationApiKey);
-            nintent.putExtra(Constants.NOTIFICATION_TITLE,notificationTitle);
-            nintent.putExtra(Constants.NOTIFICATION_MESSAGE,notificationMessage);
-            nintent.putExtra(Constants.NOTIFICATION_URI,notificationUri);
+            Intent nintent = new Intent(context, ProjectorPlayerActivity.class);
+            nintent.putExtra(Constants.NOTIFICATION_ID, notificationId);
+            nintent.putExtra(Constants.NOTIFICATION_API_KEY, notificationApiKey);
+            nintent.putExtra(Constants.NOTIFICATION_TITLE, notificationTitle);
+            nintent.putExtra(Constants.NOTIFICATION_MESSAGE, notificationMessage);
+            nintent.putExtra(Constants.NOTIFICATION_URI, notificationUri);
             nintent.putExtra(Constants.NOTIFICATION_FROM, notificationFrom);
             nintent.putExtra(Constants.PACKET_ID, packetId);
             nintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -121,7 +121,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
 //	            }
 //            }
         }
-    } 
+    }
 //    /**
 //     * 判断是否处于锁屏状态
 //     * @param c

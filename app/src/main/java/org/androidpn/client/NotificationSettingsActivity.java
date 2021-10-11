@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.preference.*;
 import android.util.Log;
 
-/** 
+/**
  * Activity for displaying the notification setting view.
  *
  * @author Sehwan Noh (devnoh@gmail.com)
@@ -71,7 +71,7 @@ public class NotificationSettingsActivity extends PreferenceActivity {
         notifyPref
                 .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference,
-                            Object newValue) {
+                                                      Object newValue) {
                         boolean checked = Boolean.valueOf(newValue.toString());
                         if (checked) {
                             preference.setTitle("Notifications Enabled");

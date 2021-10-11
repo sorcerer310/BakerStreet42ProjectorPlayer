@@ -6,7 +6,7 @@ import org.jivesoftware.smack.packet.StreamError;
  * Handles the automatic reconnection process. Every time a connection is dropped without
  * the application explictly closing it, the manager automatically tries to reconnect to
  * the server.<p>
- *
+ * <p>
  * The reconnection mechanism will try to reconnect periodically:
  * <ol>
  *  <li>For the first minute it will attempt to connect once every ten seconds.
@@ -101,15 +101,13 @@ public class ReconnectionManager implements ConnectionListener {
                         // listeners once per second about how much time remains before the next
                         // reconnection attempt.
                         while (ReconnectionManager.this.isReconnectionAllowed() &&
-                                remainingSeconds > 0)
-                        {
+                                remainingSeconds > 0) {
                             try {
                                 Thread.sleep(1000);
                                 remainingSeconds--;
                                 ReconnectionManager.this
                                         .notifyAttemptToReconnectIn(remainingSeconds);
-                            }
-                            catch (InterruptedException e1) {
+                            } catch (InterruptedException e1) {
                                 e1.printStackTrace();
                                 // Notify the reconnection has failed
                                 ReconnectionManager.this.notifyReconnectionFailed(e1);
@@ -121,8 +119,7 @@ public class ReconnectionManager implements ConnectionListener {
                             if (ReconnectionManager.this.isReconnectionAllowed()) {
                                 connection.connect();
                             }
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             // Fires the failed reconnection notification
                             ReconnectionManager.this.notifyReconnectionFailed(e);
                         }

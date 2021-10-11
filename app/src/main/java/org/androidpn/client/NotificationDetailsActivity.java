@@ -31,7 +31,7 @@ import android.widget.TextView;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.IQ.Type;
 
-/** 
+/**
  * Activity for displaying the notification details view.
  *
  * @author Sehwan Noh (devnoh@gmail.com)
@@ -71,38 +71,39 @@ public class NotificationDetailsActivity extends Activity {
         String notificationUri = intent
                 .getStringExtra(Constants.NOTIFICATION_URI);
         String notificationFrom = intent
-				.getStringExtra(Constants.NOTIFICATION_FROM);
+                .getStringExtra(Constants.NOTIFICATION_FROM);
         String packetId = intent
-				.getStringExtra(Constants.PACKET_ID);
-        
+                .getStringExtra(Constants.PACKET_ID);
+
         Log.d(LOGTAG, "notificationId=" + notificationId);
         Log.d(LOGTAG, "notificationApiKey=" + notificationApiKey);
         Log.d(LOGTAG, "notificationTitle=" + notificationTitle);
         Log.d(LOGTAG, "notificationMessage=" + notificationMessage);
         Log.d(LOGTAG, "notificationUri=" + notificationUri);
-        
+
         //TODO FIXME 发送查看回执
         IQ result = new IQ() {
-			@Override
-			public String getChildElementXML() {
-				return null;
-			}
-		};
-		result.setType(Type.RESULT);
+            @Override
+            public String getChildElementXML() {
+                return null;
+            }
+        };
+        result.setType(Type.RESULT);
         result.setPacketID(packetId);
         result.setTo(notificationFrom);
-        try{
-        	Constants.xmppManager.getConnection().sendPacket(result);
-        }catch(Exception e){}
-        
+        try {
+            Constants.xmppManager.getConnection().sendPacket(result);
+        } catch (Exception e) {
+        }
+
         View rootView = createView(notificationTitle, notificationMessage,
                 notificationUri);
         setContentView(rootView);
     }
 
     private View createView(final String title, final String message,
-            final String uri) {
-    	
+                            final String uri) {
+
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setBackgroundColor(0xffeeeeee);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -144,15 +145,15 @@ public class NotificationDetailsActivity extends Activity {
         Button okButton = new Button(this);
         okButton.setText("Ok");
         okButton.setWidth(100);
-        
+
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent;
                 if (uri != null
                         && uri.length() > 0
                         && (uri.startsWith("http:") || uri.startsWith("https:")
-                                || uri.startsWith("tel:") || uri
-                                .startsWith("geo:"))) {
+                        || uri.startsWith("tel:") || uri
+                        .startsWith("geo:"))) {
                     intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 } else {
                     intent = new Intent().setClassName(

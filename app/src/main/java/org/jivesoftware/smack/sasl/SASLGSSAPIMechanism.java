@@ -2,14 +2,14 @@
  * $RCSfile$
  * $Revision: $
  * $Date: $
- *
- *
+ * <p>
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,6 +25,7 @@ import org.jivesoftware.smack.XMPPException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
+
 import de.measite.smack.Sasl;
 import org.apache.harmony.javax.security.sasl.SaslClient;
 import org.apache.harmony.javax.security.auth.callback.CallbackHandler;
@@ -39,8 +40,8 @@ public class SASLGSSAPIMechanism extends SASLMechanism {
     public SASLGSSAPIMechanism(SASLAuthentication saslAuthentication) {
         super(saslAuthentication);
 
-        System.setProperty("javax.security.auth.useSubjectCredsOnly","false");
-        System.setProperty("java.security.auth.login.config","gss.conf");
+        System.setProperty("javax.security.auth.useSubjectCredsOnly", "false");
+        System.setProperty("java.security.auth.login.config", "gss.conf");
 
     }
 
@@ -60,9 +61,9 @@ public class SASLGSSAPIMechanism extends SASLMechanism {
      * @throws IOException If a network error occures while authenticating.
      */
     public void authenticate(String username, String host, CallbackHandler cbh) throws IOException, XMPPException {
-        String[] mechanisms = { getName() };
+        String[] mechanisms = {getName()};
         Map props = new HashMap();
-        props.put(Sasl.SERVER_AUTH,"TRUE");
+        props.put(Sasl.SERVER_AUTH, "TRUE");
         sc = Sasl.createSaslClient(mechanisms, username, "xmpp", host, props, cbh);
         authenticate();
     }
@@ -79,9 +80,9 @@ public class SASLGSSAPIMechanism extends SASLMechanism {
      * @throws IOException If a network error occures while authenticating.
      */
     public void authenticate(String username, String host, String password) throws IOException, XMPPException {
-        String[] mechanisms = { getName() };
+        String[] mechanisms = {getName()};
         Map props = new HashMap();
-        props.put(Sasl.SERVER_AUTH,"TRUE");
+        props.put(Sasl.SERVER_AUTH, "TRUE");
         sc = Sasl.createSaslClient(mechanisms, username, "xmpp", host, props, this);
         authenticate();
     }

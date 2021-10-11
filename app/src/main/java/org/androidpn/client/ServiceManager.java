@@ -24,7 +24,7 @@ import android.util.Log;
 
 import java.util.Properties;
 
-/** 
+/**
  * This class is to manage the notificatin service and to load the configuration.
  *
  * @author Sehwan Noh (devnoh@gmail.com)

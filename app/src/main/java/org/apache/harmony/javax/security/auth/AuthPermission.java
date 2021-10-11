@@ -20,7 +20,6 @@ package org.apache.harmony.javax.security.auth;
 import java.security.BasicPermission;
 
 
-
 /**
  * Governs the use of methods in this package and also its subpackages. A
  * <i>target name</i> of the permission specifies which methods are allowed
@@ -76,8 +75,7 @@ public final class AuthPermission extends BasicPermission {
     /**
      * Creates an authentication permission with the specified target name.
      *
-     * @param name
-     *            the target name of this authentication permission.
+     * @param name the target name of this authentication permission.
      */
     public AuthPermission(String name) {
         super(init(name));
@@ -86,10 +84,8 @@ public final class AuthPermission extends BasicPermission {
     /**
      * Creates an authentication permission with the specified target name.
      *
-     * @param name
-     *            the target name of this authentication permission.
-     * @param actions
-     *            this parameter is ignored and should be {@code null}.
+     * @param name    the target name of this authentication permission.
+     * @param actions this parameter is ignored and should be {@code null}.
      */
     public AuthPermission(String name, String actions) {
         super(init(name), actions);

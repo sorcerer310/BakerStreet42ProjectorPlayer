@@ -17,7 +17,7 @@ package org.androidpn.client;
 
 /**
  * Static constants for this package.
- * 
+ *
  * @author Sehwan Noh (devnoh@gmail.com)
  */
 public class Constants {
@@ -69,9 +69,9 @@ public class Constants {
     public static final String NOTIFICATION_MESSAGE = "NOTIFICATION_MESSAGE";
 
     public static final String NOTIFICATION_URI = "NOTIFICATION_URI";
-    
+
     public static final String PACKET_ID = "PACKET_ID";
-    
+
     public static final String NOTIFICATION_FROM = "NOTIFICATION_FROM";
 
     // INTENT ACTIONS

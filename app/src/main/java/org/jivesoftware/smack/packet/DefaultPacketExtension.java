@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -48,7 +48,7 @@ public class DefaultPacketExtension implements PacketExtension {
 
     private String elementName;
     private String namespace;
-    private Map<String,String> map;
+    private Map<String, String> map;
 
     /**
      * Creates a new generic packet extension.
@@ -61,7 +61,7 @@ public class DefaultPacketExtension implements PacketExtension {
         this.namespace = namespace;
     }
 
-     /**
+    /**
      * Returns the XML element name of the extension sub-packet root element.
      *
      * @return the XML element name of the packet extension.
@@ -102,7 +102,7 @@ public class DefaultPacketExtension implements PacketExtension {
         if (map == null) {
             return Collections.emptySet();
         }
-        return Collections.unmodifiableSet(new HashMap<String,String>(map).keySet());
+        return Collections.unmodifiableSet(new HashMap<String, String>(map).keySet());
     }
 
     /**
@@ -126,7 +126,7 @@ public class DefaultPacketExtension implements PacketExtension {
      */
     public synchronized void setValue(String name, String value) {
         if (map == null) {
-            map = new HashMap<String,String>();
+            map = new HashMap<String, String>();
         }
         map.put(name, value);
     }

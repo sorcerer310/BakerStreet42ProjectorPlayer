@@ -18,7 +18,6 @@ import org.androidpn.client.Constants;
 import org.androidpn.client.ServiceManager;
 
 
-
 public class ProjectorPlayerActivity extends ActionBarActivity {
     private VideoView vv;
     private MediaController mc;
@@ -27,7 +26,7 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_projector_player);
 
         //Androidpn服务初始化
@@ -56,9 +55,10 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
 
     /**
      * 唤醒并播放影片
-     * @param intent    唤醒时获得的intent包含要播放视频的信息
+     *
+     * @param intent 唤醒时获得的intent包含要播放视频的信息
      */
-    private void wakeAndPlay(Intent intent){
+    private void wakeAndPlay(Intent intent) {
         String urivalue = intent.getStringExtra(Constants.NOTIFICATION_URI);
         DeviceUtils.vibrate(this, 500);
         DeviceUtils.wakeScreen(this);
@@ -67,7 +67,7 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        DeviceUtils.onActivityResult(this,requestCode,resultCode,data);
+        DeviceUtils.onActivityResult(this, requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -94,7 +94,7 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
     /**
      * 初始化androidpn服务
      */
-    private void initAndroidpnService(){
+    private void initAndroidpnService() {
         ServiceManager serviceManager = new ServiceManager(this);
         serviceManager.setNotificationIcon(R.drawable.notification);
         serviceManager.startService();
@@ -103,16 +103,16 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
     /**
      * 初始化视频播放部分
      */
-    private void initVideoView(){
+    private void initVideoView() {
         vv = (VideoView) findViewById(R.id.vv);
         mc = new MediaController(this);
 //        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(900,720);      //华为分辨率
 //        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1920,1080);      //坚果分辨率
-//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1280,720);      //投影仪分辨率分辨率
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1280, 720);      //投影仪分辨率分辨率
 //        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(2048,1536);      //Android pad分辨率分辨率
 
-        RelativeLayout.LayoutParams lp=
-                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+//        RelativeLayout.LayoutParams lp=
+//                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
 
 //        lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 //        lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -122,16 +122,17 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
         vv.setLayoutParams(lp);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         vv.setMediaController(mc);
-        vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+        vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer arg0) {
                 DeviceUtils.lockScreen(ProjectorPlayerActivity.this);
-            }});
+            }
+        });
 
 
 //        调试代码
-        vv.setVideoURI(Uri.parse("android.resource://com.bsu.bk42projectorplayer.app/"+R.raw.pyramid));
-        vv.start();
+//        vv.setVideoURI(Uri.parse("android.resource://com.bsu.bk42projectorplayer.app/"+R.raw.pyramid));
+//        vv.start();
 
 //        playVideo("pyramid");
 //        调试代码
@@ -139,37 +140,46 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
 
     /**
      * 根据发送的消息播放视频
+     *
      * @param vpath 视频播放协议，包含要播放视频的名字
      */
-    private void playVideo(String vpath){
-        if(vpath==null) {
-            Toast.makeText(this,"视频播放失败,地址无效",Toast.LENGTH_LONG);
+    private void playVideo(String vpath) {
+        if (vpath == null) {
+            Toast.makeText(this, "视频播放失败,地址无效", Toast.LENGTH_LONG);
             return;
         }
         String[] uri = vpath.split(":");
-        if(uri.length==2 && uri[0].equals("video")) {
-            vv.setVideoURI(Uri.parse("android.resource://com.bsu.bk42projectorplayer.app/"+vpath2VideoResource(uri[1])));
+        int resourceid = vpath2VideoResource(uri[1]);
+        if (resourceid == -1)
+            return;
+        if (uri.length == 2 && uri[0].equals("video")) {
+            vv.setVideoURI(Uri.parse("android.resource://com.bsu.bk42projectorplayer.app/" + vpath2VideoResource(uri[1])));
             vv.start();
-            Toast.makeText(this,"播放视频:"+uri[1],Toast.LENGTH_LONG);
-        }else{
-            Toast.makeText(this,"视频播放失败:"+vpath,Toast.LENGTH_LONG);
+            Toast.makeText(this, "播放视频:" + uri[1], Toast.LENGTH_LONG);
+        } else {
+            Toast.makeText(this, "视频播放失败:" + vpath, Toast.LENGTH_LONG);
         }
     }
 
     /**
      * 根据获得的消息返回资源id
+     *
      * @param vname 字符串形式资源名
-     * @return      返回系统中资源ID
+     * @return 返回系统中资源ID
      */
-    private int vpath2VideoResource(String vname){
+    private int vpath2VideoResource(String vname) {
         //结局视频
-//        if(vname.equals("end1")){
-//            return R.raw.end1;
-//        }else if(vname.equals("end2")){
-//            return R.raw.end2;
-//        }else{
-//            return -1;
-//        }
+        if (vname.equals("end1")) {
+            return R.raw.end1;
+        } else if (vname.equals("end2")) {
+            return R.raw.end2;
+        } else if (vname.equals("end3")) {
+            return R.raw.end3;
+        } else if (vname.equals("end4")) {
+            return R.raw.end4;
+        } else {
+            return -1;
+        }
 
         //玄武宫视频
 //        if(vname.equals("xuanwu1")){
@@ -181,11 +191,11 @@ public class ProjectorPlayerActivity extends ActionBarActivity {
 //        }
 
         //金字塔视频
-        if(vname.equals("pyramid")){
-            return R.raw.pyramid;
-        }else{
-            return -1;
-        }
+//        if(vname.equals("pyramid")){
+//            return R.raw.pyramid;
+//        }else{
+//            return -1;
+//        }
     }
 }
 

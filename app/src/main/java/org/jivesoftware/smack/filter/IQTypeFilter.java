@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision: $
  * $Date: $
- *
+ * <p>
  * Copyright 2003-2006 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,24 +25,24 @@ import org.jivesoftware.smack.packet.Packet;
 /**
  * A filter for IQ packet types. Returns true only if the packet is an IQ packet
  * and it matches the type provided in the constructor.
- * 
+ *
  * @author Alexander Wenckus
- * 
+ *
  */
 public class IQTypeFilter implements PacketFilter {
 
-	private IQ.Type type;
+    private IQ.Type type;
 
-	public IQTypeFilter(IQ.Type type) {
-		this.type = type;
-	}
+    public IQTypeFilter(IQ.Type type) {
+        this.type = type;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jivesoftware.smack.filter.PacketFilter#accept(org.jivesoftware.smack.packet.Packet)
-	 */
-	public boolean accept(Packet packet) {
-		return (packet instanceof IQ && ((IQ) packet).getType().equals(type));
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.jivesoftware.smack.filter.PacketFilter#accept(org.jivesoftware.smack.packet.Packet)
+     */
+    public boolean accept(Packet packet) {
+        return (packet instanceof IQ && ((IQ) packet).getType().equals(type));
+    }
 }

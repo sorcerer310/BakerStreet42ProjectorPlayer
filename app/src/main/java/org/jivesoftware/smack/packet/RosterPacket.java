@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -48,13 +48,13 @@ public class RosterPacket extends IQ {
             rosterItems.add(item);
         }
     }
-    
-    public String getVersion(){
-    	return version;
+
+    public String getVersion() {
+        return version;
     }
-    
-    public void setVersion(String version){
-    	this.version = version;
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     /**
@@ -82,8 +82,8 @@ public class RosterPacket extends IQ {
     public String getChildElementXML() {
         StringBuilder buf = new StringBuilder();
         buf.append("<query xmlns=\"jabber:iq:roster\" ");
-        if(version!=null){
-        	buf.append(" ver=\""+version+"\" ");
+        if (version != null) {
+            buf.append(" ver=\"" + version + "\" ");
         }
         buf.append(">");
         synchronized (rosterItems) {
@@ -256,11 +256,9 @@ public class RosterPacket extends IQ {
             value = value.toLowerCase();
             if ("unsubscribe".equals(value)) {
                 return UNSUBSCRIPTION_PENDING;
-            }
-            else if ("subscribe".equals(value)) {
+            } else if ("subscribe".equals(value)) {
                 return SUBSCRIPTION_PENDING;
-            }
-            else {
+            } else {
                 return null;
             }
         }

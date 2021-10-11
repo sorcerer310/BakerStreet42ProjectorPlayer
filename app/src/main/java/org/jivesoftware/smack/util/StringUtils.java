@@ -2,15 +2,15 @@
  * $RCSfile$
  * $Revision$
  * $Date$
- *
+ * <p>
  * Copyright 2003-2007 Jive Software.
- *
+ * <p>
  * All rights reserved. Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -51,8 +51,7 @@ public class StringUtils {
         int atIndex = XMPPAddress.lastIndexOf("@");
         if (atIndex <= 0) {
             return "";
-        }
-        else {
+        } else {
             return XMPPAddress.substring(0, atIndex);
         }
     }
@@ -77,8 +76,7 @@ public class StringUtils {
         int slashIndex = XMPPAddress.indexOf("/");
         if (slashIndex > 0 && slashIndex > atIndex) {
             return XMPPAddress.substring(atIndex + 1, slashIndex);
-        }
-        else {
+        } else {
             return XMPPAddress.substring(atIndex + 1);
         }
     }
@@ -98,8 +96,7 @@ public class StringUtils {
         int slashIndex = XMPPAddress.indexOf("/");
         if (slashIndex + 1 > XMPPAddress.length() || slashIndex < 0) {
             return "";
-        }
-        else {
+        } else {
             return XMPPAddress.substring(slashIndex + 1);
         }
     }
@@ -119,11 +116,9 @@ public class StringUtils {
         int slashIndex = XMPPAddress.indexOf("/");
         if (slashIndex < 0) {
             return XMPPAddress;
-        }
-        else if (slashIndex == 0) {
+        } else if (slashIndex == 0) {
             return "";
-        }
-        else {
+        } else {
             return XMPPAddress.substring(0, slashIndex);
         }
     }
@@ -164,23 +159,40 @@ public class StringUtils {
             return null;
         }
         StringBuilder buf = new StringBuilder(node.length() + 8);
-        for (int i=0, n=node.length(); i<n; i++) {
+        for (int i = 0, n = node.length(); i < n; i++) {
             char c = node.charAt(i);
             switch (c) {
-                case '"': buf.append("\\22"); break;
-                case '&': buf.append("\\26"); break;
-                case '\'': buf.append("\\27"); break;
-                case '/': buf.append("\\2f"); break;
-                case ':': buf.append("\\3a"); break;
-                case '<': buf.append("\\3c"); break;
-                case '>': buf.append("\\3e"); break;
-                case '@': buf.append("\\40"); break;
-                case '\\': buf.append("\\5c"); break;
+                case '"':
+                    buf.append("\\22");
+                    break;
+                case '&':
+                    buf.append("\\26");
+                    break;
+                case '\'':
+                    buf.append("\\27");
+                    break;
+                case '/':
+                    buf.append("\\2f");
+                    break;
+                case ':':
+                    buf.append("\\3a");
+                    break;
+                case '<':
+                    buf.append("\\3c");
+                    break;
+                case '>':
+                    buf.append("\\3e");
+                    break;
+                case '@':
+                    buf.append("\\40");
+                    break;
+                case '\\':
+                    buf.append("\\5c");
+                    break;
                 default: {
                     if (Character.isWhitespace(c)) {
                         buf.append("\\20");
-                    }
-                    else {
+                    } else {
                         buf.append(c);
                     }
                 }
@@ -224,41 +236,63 @@ public class StringUtils {
         if (node == null) {
             return null;
         }
-        char [] nodeChars = node.toCharArray();
+        char[] nodeChars = node.toCharArray();
         StringBuilder buf = new StringBuilder(nodeChars.length);
-        for (int i=0, n=nodeChars.length; i<n; i++) {
-            compare: {
+        for (int i = 0, n = nodeChars.length; i < n; i++) {
+            compare:
+            {
                 char c = node.charAt(i);
-                if (c == '\\' && i+2<n) {
-                    char c2 = nodeChars[i+1];
-                    char c3 = nodeChars[i+2];
+                if (c == '\\' && i + 2 < n) {
+                    char c2 = nodeChars[i + 1];
+                    char c3 = nodeChars[i + 2];
                     if (c2 == '2') {
                         switch (c3) {
-                            case '0': buf.append(' '); i+=2; break compare;
-                            case '2': buf.append('"'); i+=2; break compare;
-                            case '6': buf.append('&'); i+=2; break compare;
-                            case '7': buf.append('\''); i+=2; break compare;
-                            case 'f': buf.append('/'); i+=2; break compare;
+                            case '0':
+                                buf.append(' ');
+                                i += 2;
+                                break compare;
+                            case '2':
+                                buf.append('"');
+                                i += 2;
+                                break compare;
+                            case '6':
+                                buf.append('&');
+                                i += 2;
+                                break compare;
+                            case '7':
+                                buf.append('\'');
+                                i += 2;
+                                break compare;
+                            case 'f':
+                                buf.append('/');
+                                i += 2;
+                                break compare;
                         }
-                    }
-                    else if (c2 == '3') {
+                    } else if (c2 == '3') {
                         switch (c3) {
-                            case 'a': buf.append(':'); i+=2; break compare;
-                            case 'c': buf.append('<'); i+=2; break compare;
-                            case 'e': buf.append('>'); i+=2; break compare;
+                            case 'a':
+                                buf.append(':');
+                                i += 2;
+                                break compare;
+                            case 'c':
+                                buf.append('<');
+                                i += 2;
+                                break compare;
+                            case 'e':
+                                buf.append('>');
+                                i += 2;
+                                break compare;
                         }
-                    }
-                    else if (c2 == '4') {
+                    } else if (c2 == '4') {
                         if (c3 == '0') {
                             buf.append("@");
-                            i+=2;
+                            i += 2;
                             break compare;
                         }
-                    }
-                    else if (c2 == '5') {
+                    } else if (c2 == '5') {
                         if (c3 == 'c') {
                             buf.append("\\");
-                            i+=2;
+                            i += 2;
                             break compare;
                         }
                     }
@@ -281,53 +315,47 @@ public class StringUtils {
             return null;
         }
         char ch;
-        int i=0;
-        int last=0;
+        int i = 0;
+        int last = 0;
         char[] input = string.toCharArray();
         int len = input.length;
-        StringBuilder out = new StringBuilder((int)(len*1.3));
+        StringBuilder out = new StringBuilder((int) (len * 1.3));
         for (; i < len; i++) {
             ch = input[i];
             if (ch > '>') {
-            }
-            else if (ch == '<') {
+            } else if (ch == '<') {
                 if (i > last) {
                     out.append(input, last, i - last);
                 }
                 last = i + 1;
                 out.append(LT_ENCODE);
-            }
-            else if (ch == '>') {
+            } else if (ch == '>') {
                 if (i > last) {
                     out.append(input, last, i - last);
                 }
                 last = i + 1;
                 out.append(GT_ENCODE);
-            }
-
-            else if (ch == '&') {
+            } else if (ch == '&') {
                 if (i > last) {
                     out.append(input, last, i - last);
                 }
                 // Do nothing if the string is of the form &#235; (unicode value)
                 if (!(len > i + 5
-                    && input[i + 1] == '#'
-                    && Character.isDigit(input[i + 2])
-                    && Character.isDigit(input[i + 3])
-                    && Character.isDigit(input[i + 4])
-                    && input[i + 5] == ';')) {
-                        last = i + 1;
-                        out.append(AMP_ENCODE);
-                    }
-            }
-            else if (ch == '"') {
+                        && input[i + 1] == '#'
+                        && Character.isDigit(input[i + 2])
+                        && Character.isDigit(input[i + 3])
+                        && Character.isDigit(input[i + 4])
+                        && input[i + 5] == ';')) {
+                    last = i + 1;
+                    out.append(AMP_ENCODE);
+                }
+            } else if (ch == '"') {
                 if (i > last) {
                     out.append(input, last, i - last);
                 }
                 last = i + 1;
                 out.append(QUOTE_ENCODE);
-            }
-            else if (ch == '\'') {
+            } else if (ch == '\'') {
                 if (i > last) {
                     out.append(input, last, i - last);
                 }
@@ -369,17 +397,15 @@ public class StringUtils {
         if (digest == null) {
             try {
                 digest = MessageDigest.getInstance("SHA-1");
-            }
-            catch (NoSuchAlgorithmException nsae) {
+            } catch (NoSuchAlgorithmException nsae) {
                 System.err.println("Failed to load the SHA-1 MessageDigest. " +
-                "Jive will be unable to function normally.");
+                        "Jive will be unable to function normally.");
             }
         }
         // Now, compute hash.
         try {
             digest.update(data.getBytes("UTF-8"));
-        }
-        catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             System.err.println(e);
         }
         return encodeHex(digest.digest());
@@ -411,11 +437,10 @@ public class StringUtils {
      * @return a base64 encoded String.
      */
     public static String encodeBase64(String data) {
-        byte [] bytes = null;
+        byte[] bytes = null;
         try {
             bytes = data.getBytes("ISO-8859-1");
-        }
-        catch (UnsupportedEncodingException uee) {
+        } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
         }
         return encodeBase64(bytes);
@@ -452,7 +477,7 @@ public class StringUtils {
      * @return A base64 encoded String.
      */
     public static String encodeBase64(byte[] data, int offset, int len, boolean lineBreaks) {
-        return Base64.encodeBytes(data, offset, len, (lineBreaks ?  Base64.NO_OPTIONS : Base64.DONT_BREAK_LINES));
+        return Base64.encodeBytes(data, offset, len, (lineBreaks ? Base64.NO_OPTIONS : Base64.DONT_BREAK_LINES));
     }
 
     /**
@@ -479,7 +504,7 @@ public class StringUtils {
      * array index.
      */
     private static char[] numbersAndLetters = ("0123456789abcdefghijklmnopqrstuvwxyz" +
-                    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
 
     /**
      * Returns a random String of numbers and letters (lower and upper case)
@@ -499,8 +524,8 @@ public class StringUtils {
             return null;
         }
         // Create a char buffer to put random letters and numbers in.
-        char [] randBuffer = new char[length];
-        for (int i=0; i<randBuffer.length; i++) {
+        char[] randBuffer = new char[length];
+        for (int i = 0; i < randBuffer.length; i++) {
             randBuffer[i] = numbersAndLetters[randGen.nextInt(71)];
         }
         return new String(randBuffer);

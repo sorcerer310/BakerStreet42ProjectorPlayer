@@ -19,8 +19,8 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-/** 
- * A listener class for monitoring changes in phone connection states. 
+/**
+ * A listener class for monitoring changes in phone connection states.
  *
  * @author Sehwan Noh (devnoh@gmail.com)
  */
@@ -40,7 +40,7 @@ public class PhoneStateChangeListener extends PhoneStateListener {
         super.onDataConnectionStateChanged(state);
         Log.d(LOGTAG, "onDataConnectionStateChanged()...");
         Log.d(LOGTAG, "Data Connection State = " + getState(state));
-        
+
         if (state == TelephonyManager.DATA_CONNECTED) {
             notificationService.connect();
         }
@@ -48,14 +48,14 @@ public class PhoneStateChangeListener extends PhoneStateListener {
 
     private String getState(int state) {
         switch (state) {
-        case 0: // '\0'
-            return "DATA_DISCONNECTED";
-        case 1: // '\001'
-            return "DATA_CONNECTING";
-        case 2: // '\002'
-            return "DATA_CONNECTED";
-        case 3: // '\003'
-            return "DATA_SUSPENDED";
+            case 0: // '\0'
+                return "DATA_DISCONNECTED";
+            case 1: // '\001'
+                return "DATA_CONNECTING";
+            case 2: // '\002'
+                return "DATA_CONNECTED";
+            case 3: // '\003'
+                return "DATA_SUSPENDED";
         }
         return "DATA_<UNKNOWN>";
     }

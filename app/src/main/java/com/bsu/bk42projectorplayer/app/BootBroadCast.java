@@ -12,8 +12,8 @@ public class BootBroadCast extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         //开机启动的Activity
-        Intent activity=new Intent(context,ProjectorPlayerActivity.class);
-        activity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//不加此句会报错。
+        Intent activity = new Intent(context, ProjectorPlayerActivity.class);
+        activity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//不加此句会报错。
         context.startActivity(activity);
 
     }

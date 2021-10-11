@@ -17,7 +17,7 @@ package org.androidpn.client;
 
 import android.util.Log;
 
-/** 
+/**
  * A thread class for recennecting the server.
  *
  * @author Sehwan Noh (devnoh@gmail.com)
@@ -58,6 +58,7 @@ public class ReconnectionThread extends Thread {
 
     /**
      * 重连时间修改为6秒,大幅度提高重连速度.
+     *
      * @return
      */
     private int waiting() {
